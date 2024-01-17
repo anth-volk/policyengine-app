@@ -10,6 +10,6 @@ do
       git mv "$FILE" "$NEW_FILE"
   fi
 done
-echo "Renaming all markdown filenames beginning with YYYY-MM-DD format in posts.json..."
-sed -i "" -E "s/(\"filename\"[[:space:]]*:[[:space:]]*\")${YYYY_MM_DD}(.*)/\1\2/g" posts.json
+echo "Renaming all markdown filenames beginning with YYYY-MM-DD format in Posts.jsx..."
+sed -i "" -E "s/(\"filename\"[[:space:]]*:[[:space:]]*\")${YYYY_MM_DD}(.*)/\1\2/g" Posts.jsx
 echo "Renaming done!"

@@ -1,4 +1,4 @@
-import postJson from "../posts/posts.json";
+import posts from "../redesign/data/Posts.jsx";
 import style from "../style";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -92,7 +92,7 @@ export function BlogPostPreviewRegular(props) {
 
 export default function BlogPostHolder(props) {
   const { countryId } = props;
-  // postJson is a JSON file containing all the blog posts.
+  // posts is a JS object containing all the blog posts.
 
   // Each post in the list has the following fields:
   // - title: the title of the post
@@ -100,22 +100,15 @@ export default function BlogPostHolder(props) {
   // - filename: the filename of the post (a Markdown file)
   // - image: the filename of the image to display with the post
 
-  let posts = [];
+  let postsArr = [];
   // Sort posts by date
-  postJson.sort((a, b) => {
+  posts.sort((a, b) => {
     return new Date(b.date) - new Date(a.date);
   });
-  for (let i = 0; i < postJson.length; i++) {
-    if (
-      postJson[i].tags.includes(countryId) ||
-      postJson[i].tags.includes("global")
-    )
-      posts.push(
-        <BlogPostPreviewRegular
-          key={i}
-          {...postJson[i]}
-          countryId={countryId}
-        />,
+  for (let i = 0; i < posts.length; i++) {
+    if (posts[i].tags.includes(countryId) || posts[i].tags.includes("global"))
+      postsArr.push(
+        <BlogPostPreviewRegular key={i} {...posts[i]} countryId={countryId} />,
       );
   }
 
@@ -130,7 +123,7 @@ export default function BlogPostHolder(props) {
         overflowY: "hidden",
       }}
     >
-      {posts}
+      {postsArr}
     </div>
   );
 }

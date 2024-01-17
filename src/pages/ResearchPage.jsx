@@ -1,5 +1,5 @@
 import { BlogPostPreviewRegular } from "../layout/BlogPostHolder";
-import postJson from "../posts/posts.json";
+import posts from "../redesign/data/Posts.jsx";
 import style from "../style";
 
 export default function ResearchPage(props) {
@@ -13,18 +13,15 @@ export default function ResearchPage(props) {
   // - filename: the filename of the post (a Markdown file)
   // - image: the filename of the image to display with the post
 
-  let posts = [];
+  let postsArr = [];
   // Sort posts by date
-  postJson.sort((a, b) => {
+  posts.sort((a, b) => {
     return new Date(b.date) - new Date(a.date);
   });
   let j = 0;
-  for (let i = 0; i < postJson.length; i++) {
-    if (
-      postJson[i].tags.includes(countryId) ||
-      postJson[i].tags.includes("global")
-    ) {
-      posts.push(
+  for (let i = 0; i < posts.length; i++) {
+    if (posts[i].tags.includes(countryId) || posts[i].tags.includes("global")) {
+      postsArr.push(
         <div
           key={i}
           style={{
@@ -32,7 +29,7 @@ export default function ResearchPage(props) {
           }}
         >
           <BlogPostPreviewRegular
-            {...postJson[i]}
+            {...posts[i]}
             countryId={countryId}
             width={j === 0 ? "30vw" : "30vw"}
             height={400}
@@ -57,7 +54,7 @@ export default function ResearchPage(props) {
           flexWrap: "wrap",
         }}
       >
-        {posts}
+        {postsArr}
       </div>
     </>
   );
