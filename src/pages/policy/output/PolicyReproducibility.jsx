@@ -50,15 +50,7 @@ export default function PolicyReproducibility(props) {
           paddingTop: 30,
           marginBottom: 30,
         }}
-      >
-        <Button
-          text="Copy"
-          style={{ width: 100 }}
-          onClick={() => {
-            navigator.clipboard.writeText(codeLines.join("\n"));
-          }}
-        />
-      </div>
+      ></div>
     </>
   );
 }
