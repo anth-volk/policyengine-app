@@ -55,6 +55,11 @@ export default function PolicyReproducibility(props) {
   );
 }
 
+/**
+ * Returns a series of Python lines meant to contain import statements
+ * @param {Object} metadata The country metadata for the policy
+ * @returns {Array<String>} The Python lines
+ */
 function getHeaderLines(metadata) {
   return [
     "from " + metadata.package + " import Microsimulation",
@@ -66,6 +71,13 @@ function getHeaderLines(metadata) {
   ];
 }
 
+/**
+ * Returns an array of lines meant to define the baseline within
+ * the PolicyReproducibility's displayed Python code
+ * @param {String} region The region code from the URL search params
+ * @param {Object} policy The relevant policy object
+ * @returns {Array<String>} The Python lines to be displayed
+ */
 function getBaselineDefinitionCode(region, policy) {
   if (!US_REGIONS.includes(region)) {
     return [];
@@ -108,6 +120,12 @@ function getBaselineDefinitionCode(region, policy) {
   ];
 }
 
+/**
+ * Returns the Python lines of code that enqueue a policy's calculation
+ * @param {String} region The region code taken from the URL search params
+ * @param {String} timePeriod The timePeriod parameter of the search params
+ * @returns {Array<String>} An array of Python lines to be displayed
+ */
 function getImplementationCode(region, timePeriod) {
   const isCountryUS = US_REGIONS.includes(region);
 
