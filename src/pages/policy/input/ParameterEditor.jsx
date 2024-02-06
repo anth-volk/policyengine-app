@@ -1,6 +1,6 @@
 import CenteredMiddleColumn from "../../../layout/CenteredMiddleColumn";
 import ParameterOverTime from "./ParameterOverTime";
-import { Alert, DatePicker, Switch } from "antd";
+import { Alert, Button, DatePicker, Dropdown, Popover, Radio, Switch } from "antd";
 import { getNewPolicyId } from "../../../api/parameters";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -122,6 +122,7 @@ export default function ParameterEditor(props) {
       />
     );
   }
+
   const mobile = useMobile();
   const editControl = (
     <div
@@ -134,15 +135,39 @@ export default function ParameterEditor(props) {
         gap: 10,
       }}
     >
-      <RangePicker
-        defaultValue={[moment(startDate), moment(endDate)]}
-        onChange={(_, dateStrings) => {
-          setStartDate(dateStrings[0]);
-          setEndDate(dateStrings[1]);
-        }}
-        disabledDate={(date) => date.isBefore("2021-01-01")}
-        separator="→"
-      />
+      {/*
+      */}
+      <Radio.Group
+        optionType="button"
+        buttonStyle="solid"
+        defaultValue="a"
+      >
+        <Radio.Button value="a">
+          From January 1, 2024, onward
+        </Radio.Button>
+        <Popover
+          placement="bottom"
+          trigger={["click"]}
+          content={
+            <RangePicker
+              defaultValue={[moment(startDate), moment(endDate)]}
+              onChange={(_, dateStrings) => {
+                setStartDate(dateStrings[0]);
+                setEndDate(dateStrings[1]);
+              }}
+              disabledDate={(date) => date.isBefore("2021-01-01")}
+              separator="→"
+            />
+          }
+        >
+          <Radio.Button
+            value="b"
+          >
+            Advanced
+          </Radio.Button>
+        </Popover>
+
+      </Radio.Group>
       {control}
     </div>
   );
