@@ -137,37 +137,39 @@ export default function ParameterEditor(props) {
     >
       {/*
       */}
-      <Radio.Group
-        optionType="button"
-        buttonStyle="solid"
-        defaultValue="a"
+      <RangePicker
+        picker="year"
+        defaultValue={[moment(startDate), ]}
+        onChange={(_, dateStrings) => {
+          setStartDate(dateStrings[0]);
+          setEndDate(dateStrings[1]);
+        }}
+        disabledDate={(date) => date.isBefore("2021-01-01")}
+        separator="→"
+        placeholder={[, "Forever"]}
+      />
+      <Popover
+        placement="bottom"
+        trigger={["click"]}
+        content={
+          <RangePicker
+            defaultValue={[moment(startDate), moment(endDate)]}
+            onChange={(_, dateStrings) => {
+              setStartDate(dateStrings[0]);
+              setEndDate(dateStrings[1]);
+            }}
+            disabledDate={(date) => date.isBefore("2021-01-01")}
+            separator="→"
+          />
+        }
       >
-        <Radio.Button value="a">
-          From January 1, 2024, onward
-        </Radio.Button>
-        <Popover
-          placement="bottom"
-          trigger={["click"]}
-          content={
-            <RangePicker
-              defaultValue={[moment(startDate), moment(endDate)]}
-              onChange={(_, dateStrings) => {
-                setStartDate(dateStrings[0]);
-                setEndDate(dateStrings[1]);
-              }}
-              disabledDate={(date) => date.isBefore("2021-01-01")}
-              separator="→"
-            />
-          }
+        <Button
+          value="b"
+          buttonStyle="solid"
         >
-          <Radio.Button
-            value="b"
-          >
-            Advanced
-          </Radio.Button>
-        </Popover>
-
-      </Radio.Group>
+          Advanced
+        </Button>
+      </Popover>
       {control}
     </div>
   );
