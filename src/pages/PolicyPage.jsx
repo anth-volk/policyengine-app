@@ -106,6 +106,30 @@ export default function PolicyPage(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [!!policy.reform.data]);
 
+  // Now that we have a baseline and reform, iterate over both and
+  // determine if any of the parameters no longer exist in the tax system
+  let staleParams = {
+    baseline: [],
+    reform: []
+  }
+
+  if (policy.baseline.data) {
+    const baselineParams = Object.keys(policy.baseline.data);
+    baselineParams?.forEach((param) => {
+      if (!Object.keys(metadata.parameters).includes(param)) {
+        staleParams.baseline.push(param);
+      }
+    });
+  }
+  if (policy.reform.data) {
+    const reformParams = Object.keys(policy.reform.data);
+    reformParams?.forEach((param) => {
+      if (!Object.keys(metadata.parameters).includes(param)) {
+        staleParams.reform.push(param);
+      }
+    });
+  }
+
   let middle = null;
 
   if (!policy.reform.data) {
