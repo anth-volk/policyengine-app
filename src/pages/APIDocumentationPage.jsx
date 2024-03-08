@@ -377,12 +377,12 @@ function JSONBlock({ json, title }) {
 
   function handleMouseOver(event) {
     event.currentTarget.style.backgroundColor =
-      buttonStyles.primary.hoverBackgroundColor;
+      buttonStyles.secondary.hoverBackgroundColor;
   }
 
   function handleMouseOut(event) {
     event.currentTarget.style.backgroundColor =
-      buttonStyles.primary.standardBackgroundColor;
+      buttonStyles.secondary.standardBackgroundColor;
   }
 
   function handleCopy(code) {
@@ -425,7 +425,7 @@ function JSONBlock({ json, title }) {
             <Button
               type="primary"
               style={{
-                backgroundColor: buttonStyles.primary.standardBackgroundColor,
+                backgroundColor: buttonStyles.secondary.standardBackgroundColor,
                 border: 0,
                 fontWeight: 500,
               }}
@@ -457,7 +457,7 @@ function JSONBlock({ json, title }) {
             <Button
               type="primary"
               style={{
-                backgroundColor: buttonStyles.primary.standardBackgroundColor,
+                backgroundColor: buttonStyles.secondary.standardBackgroundColor,
                 border: 0,
                 fontWeight: 500,
                 width: "6rem",
