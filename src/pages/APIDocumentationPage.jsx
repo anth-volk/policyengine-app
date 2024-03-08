@@ -375,16 +375,6 @@ function JSONBlock({ json, title }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
-  function handleMouseOver(event) {
-    event.currentTarget.style.backgroundColor =
-      buttonStyles.primary.hoverBackgroundColor;
-  }
-
-  function handleMouseOut(event) {
-    event.currentTarget.style.backgroundColor =
-      buttonStyles.primary.standardBackgroundColor;
-  }
-
   function handleCopy(code) {
     navigator.clipboard.writeText(code);
     setIsCopied(true);
@@ -423,14 +413,11 @@ function JSONBlock({ json, title }) {
         >
           <Tooltip title={`${isExpanded ? "Close" : "Expand"} the code block`}>
             <Button
-              type="primary"
+              type="default"
               style={{
-                backgroundColor: buttonStyles.primary.standardBackgroundColor,
                 border: 0,
                 fontWeight: 500,
               }}
-              onMouseOver={handleMouseOver}
-              onMouseOut={handleMouseOut}
               onClick={() => setIsExpanded((prev) => !prev)}
             >
               <div
@@ -455,15 +442,12 @@ function JSONBlock({ json, title }) {
           </Tooltip>
           <Tooltip title="Copy the code block">
             <Button
-              type="primary"
+              type="default"
               style={{
-                backgroundColor: buttonStyles.primary.standardBackgroundColor,
                 border: 0,
                 fontWeight: 500,
                 width: "6rem",
               }}
-              onMouseOver={handleMouseOver}
-              onMouseOut={handleMouseOut}
               onClick={handleCopy}
             >
               <div
