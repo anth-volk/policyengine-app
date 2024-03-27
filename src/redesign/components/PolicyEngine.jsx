@@ -21,7 +21,7 @@ import Testimonials from "./Testimonials";
 import CalculatorInterstitial from "./CalculatorInterstitial";
 import CitizensEconomicCouncil from "./CitizensEconomicCouncil";
 import APIDocumentationPage from "../../pages/APIDocumentationPage";
-import CookieConsent from "layout/CookieConsent";
+import CookieConsent from "modals/CookieConsent";
 import TrafwaCalculator from "./TrafwaCalculator";
 
 const PolicyPage = lazy(() => import("../../pages/PolicyPage"));
