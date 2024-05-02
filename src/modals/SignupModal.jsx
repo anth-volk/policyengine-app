@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal } from "antd";
+import { Checkbox, Modal } from "antd";
 import Button from "../controls/Button";
 import { useAuth0 } from "@auth0/auth0-react";
 import { loginOptions } from "../auth/authUtils";
@@ -68,6 +68,25 @@ export default function SignupModal(props) {
             width="100%"
             onClick={handleCloseModal}
           />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
+          <Checkbox
+            // label={keyToLabel[key] || key}
+            checked={true}
+            // onCheck={
+            //   checkedValues.includes(key)
+            //     ? () => setCheckedValues(checkedValues.filter((k) => k !== key))
+            //     : () => setCheckedValues(checkedValues.concat([key]))
+            // }
+          />
+          <p style={{margin: 0}}>Import past policy simulations</p>
         </div>
       </div>
     </Modal>
