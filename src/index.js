@@ -12,6 +12,7 @@ import {
   createBrowserRouter,
   RouterProvider
 } from "react-router-dom";
+import ErrorPage from "./layout/Error.jsx";
 
 var Plotly = require("plotly.js/dist/plotly.js");
 Plotly.register(loc_en_gb);
@@ -20,7 +21,8 @@ Plotly.register(loc_en_us);
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <PolicyEngine />
+    element: <PolicyEngine />,
+    errorElement: <ErrorPage />
   }
 ]);
 
