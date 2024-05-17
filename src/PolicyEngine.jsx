@@ -7,7 +7,7 @@ import Contact from "./pages/Contact";
 import Donate from "./pages/Donate";
 import { useLocation } from "react-router-dom";
 import BlogPage from "./pages/BlogPage";
-import { COUNTRY_NAMES, COUNTRY_BASELINE_POLICIES } from "./data/countries";
+import { COUNTRY_BASELINE_POLICIES, COUNTRY_CODES } from "./data/countries";
 
 import { useEffect, useState, lazy, Suspense } from "react";
 import {
@@ -345,9 +345,9 @@ export function findCountryId() {
     localeCountry = locale.split("-")[1].toLowerCase();
   }
 
-  if (Object.keys(COUNTRY_NAMES).includes(pathCountry)) {
+  if (COUNTRY_CODES.includes(pathCountry)) {
     return pathCountry;
-  } else if (Object.keys(COUNTRY_NAMES).includes(localeCountry)) {
+  } else if (COUNTRY_CODES.includes(localeCountry)) {
     return localeCountry;
   } else {
     return "us";
