@@ -72,7 +72,7 @@ export const router = createBrowserRouter([
           // but removing it is out of the scope
           // of the PR creating this router
           {
-            path: "conatct",
+            path: "contact",
             element: <Contact />
           },
           {
