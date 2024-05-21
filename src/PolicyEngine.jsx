@@ -33,6 +33,7 @@ import { ConfigProvider } from "antd";
 import style from "./style";
 import RedirectToCountry from "./routing/RedirectToCountry";
 import CountryIdLayout from "./routing/CountryIdLayout";
+import { COUNTRY_BASELINE_POLICIES } from "./data/countries";
 
 const PolicyPage = lazy(() => import("./pages/PolicyPage"));
 const HouseholdPage = lazy(() => import("./pages/HouseholdPage"));
@@ -47,40 +48,21 @@ function ScrollToTop() {
   return null;
 }
 
-export default function PolicyEngine({ pathname }) {
-  const COUNTRIES = ["us", "uk", "ca", "ng", "il"];
+export default function PolicyEngine() {
 
   // First, check if the country is specified (.org/[country]/...)
-  const path = pathname || window.location.pathname;
+  const path = window.location.pathname;
   const pathParts = path.split("/");
   let countryId = pathParts[1];
 
-  if (!COUNTRIES.includes(countryId)) {
-    // If the country is not specified, look up the country ID from the user's browser language
-    const browserLanguage = navigator.language;
-    countryId = {
-      "en-US": "us",
-      "en-GB": "uk",
-      "en-CA": "ca",
-      "en-NG": "ng",
-      "en-IL": "il",
-    }[browserLanguage];
-  }
-
   const [searchParams, setSearchParams] = useSearchParams();
   const householdId = searchParams.get("household");
-  const defaultBaselinePolicy =
-    countryId === "uk"
-      ? 1
-      : countryId === "us"
-        ? 2
-        : countryId === "ca"
-          ? 3
-          : countryId === "ng"
-            ? 4
-            : countryId === "il"
-              ? 5
-              : 1;
+
+  let defaultBaselinePolicy = 1;
+  if (Object.keys(COUNTRY_BASELINE_POLICIES).includes(countryId)) {
+    defaultBaselinePolicy = COUNTRY_BASELINE_POLICIES[countryId];
+  }
+
   const reformPolicyId = searchParams.get("reform") || defaultBaselinePolicy;
   const baselinePolicyId =
     searchParams.get("baseline") || defaultBaselinePolicy;
@@ -285,8 +267,6 @@ export default function PolicyEngine({ pathname }) {
         {/*<Route path="/" element={<Navigate to={`/${countryId}`} />} />*/}
         <Route path="/" element={<RedirectToCountry />} />
 
-
-        {/*<Route path="/callback" element={<AuthCallback />} />*/}
         <Route path="/:countryId" element={<CountryIdLayout />} >
           <Route index={true} element={<Home />} />
           <Route path="about" element={<About />} />
@@ -311,6 +291,8 @@ export default function PolicyEngine({ pathname }) {
           path="/us/trafwa-ctc-calculator"
           element={<TrafwaCalculator />}
         />
+
+        {/*<Route path="/callback" element={<AuthCallback />} />*/}
         {/*
         <Route path="/:countryId/research/*" element={<BlogPage />} />
 
