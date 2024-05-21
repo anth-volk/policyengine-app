@@ -289,21 +289,30 @@ export default function PolicyEngine({ pathname }) {
         {/*<Route path="/callback" element={<AuthCallback />} />*/}
         <Route path="/:countryId" element={<CountryIdLayout />} >
           <Route index={true} element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="jobs" element={<Jobs />} />
+          <Route path="testimonials" element={<Testimonials />} />
+          <Route
+            path="calculator"
+            element={<CalculatorInterstitial />}
+          />
+          <Route path="research" element={<Research />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="donate" element={<Donate />} />
+          <Route path="privacy" element={<PrivacyPage />} />
+          <Route path="terms" element={<TACPage />} />
+          <Route
+            path="api"
+            element={<APIDocumentationPage metadata={metadata} />}
+          />
         </Route>
-        {/*
-        <Route path="/:countryId/about" element={<About />} />
-        <Route path="/:countryId/jobs" element={<Jobs />} />
-        <Route path="/:countryId/testimonials" element={<Testimonials />} />
+        <Route path="/uk/cec" element={<CitizensEconomicCouncil />} />
         <Route
-          path="/:countryId/calculator"
-          element={<CalculatorInterstitial />}
+          path="/us/trafwa-ctc-calculator"
+          element={<TrafwaCalculator />}
         />
-        <Route path="/:countryId/research" element={<Research />} />
-        <Route path="/:countryId/contact" element={<Contact />} />
-        <Route path="/:countryId/donate" element={<Donate />} />
+        {/*
         <Route path="/:countryId/research/*" element={<BlogPage />} />
-        <Route path="/:countryId/privacy" element={<PrivacyPage />} />
-        <Route path="/:countryId/terms" element={<TACPage />} />
 
         <Route
           path="/:countryId/household/*"
@@ -330,15 +339,6 @@ export default function PolicyEngine({ pathname }) {
           }
         />
 
-        <Route
-          path="/:countryId/api"
-          element={<APIDocumentationPage metadata={metadata} />}
-        />
-        <Route path="/uk/cec" element={<CitizensEconomicCouncil />} />
-        <Route
-          path="/us/trafwa-ctc-calculator"
-          element={<TrafwaCalculator />}
-        />
         */}
 
         {/* redirect from /countryId/blog/slug to /countryId/research/slug */}
