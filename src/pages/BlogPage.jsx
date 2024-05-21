@@ -55,8 +55,6 @@ export default function BlogPage() {
   const countryId = useCountryId();
   const postName = slug;
 
-  console.log(slug);
-
   const post = posts.find((post) => post.slug === postName);
   const postDate = moment(post.date, "YYYY-MM-DD HH:mm:ss");
 

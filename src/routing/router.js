@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 import Auth0ProviderWithNavigate from "../auth/Auth0ProviderWithNavigate";
 import ErrorPage from "../layout/Error";
 import RedirectToCountry from "./RedirectToCountry";
@@ -52,11 +52,15 @@ export const router = createBrowserRouter([
           },
           {
             path: "research",
-            element: <Research />,
+            element: <Outlet />, 
             children: [
               {
+                index: true,
+                element: <Research />
+              },
+              {
                 path: ":slug",
-                element: <BlogPage />
+                element: <BlogPage />,
               }
             ]
           },
