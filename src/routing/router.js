@@ -101,7 +101,6 @@ export const router = createBrowserRouter([
 /*
 
         <Route path="/callback" element={<AuthCallback />} />
-        <Route path="/:countryId/research/*" element={<BlogPage />} />
 
         <Route
           path="/:countryId/household/*"
