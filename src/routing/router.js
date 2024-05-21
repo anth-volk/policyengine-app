@@ -18,6 +18,7 @@ import CitizensEconomicCouncil from "../applets/CitizensEconomicCouncil";
 import TrafwaCalculator from "../applets/TrafwaCalculator";
 import { metadataLoader } from "./metadataLoader";
 import AuthCallback from "../layout/AuthCallback";
+import PolicyPage from "../pages/PolicyPage";
 
 export const router = createBrowserRouter([
  {
@@ -36,6 +37,7 @@ export const router = createBrowserRouter([
         path: "/:countryId",
         element: <CountryIdLayout />,
         loader: metadataLoader,
+        id: "country-layout",
         children: [
           {
             index: true,
@@ -90,6 +92,10 @@ export const router = createBrowserRouter([
             path: "terms",
             element: <TACPage />
           },
+          {
+            path: "policy",
+            element: <PolicyPage /> 
+          }
         ]
         
       },
@@ -106,8 +112,6 @@ export const router = createBrowserRouter([
 ]);
 
 /*
-
-        <Route path="/callback" element={<AuthCallback />} />
 
         <Route
           path="/:countryId/household/*"
