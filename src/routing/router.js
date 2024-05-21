@@ -82,6 +82,7 @@ export const router = createBrowserRouter([
         ]
         
       },
+      /*
       {
         path: "/uk",
         children: [
@@ -100,6 +101,7 @@ export const router = createBrowserRouter([
           }
         ]
       }
+      */
     ]
  }
 ]);
