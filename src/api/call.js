@@ -113,7 +113,6 @@ export function updateMetadata(countryId, setMetadata) {
         }[countryId],
         currency: countryId === "uk" ? "£" : "$",
       };
-      setMetadata(metadata);
       return metadata;
     });
 }

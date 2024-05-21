@@ -16,6 +16,7 @@ import TACPage from "../pages/TermsAndConditions";
 import BlogPage from "../pages/BlogPage";
 import CitizensEconomicCouncil from "../applets/CitizensEconomicCouncil";
 import TrafwaCalculator from "../applets/TrafwaCalculator";
+import { metadataLoader } from "./metadataLoader";
 
 export const router = createBrowserRouter([
  {
@@ -29,6 +30,7 @@ export const router = createBrowserRouter([
       {
         path: "/:countryId",
         element: <CountryIdLayout />,
+        loader: metadataLoader,
         children: [
           {
             index: true,

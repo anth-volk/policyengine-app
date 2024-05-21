@@ -65,8 +65,8 @@ export default function PolicyEngine() {
   const baselinePolicyId =
     searchParams.get("baseline") || defaultBaselinePolicy;
 
-  const [metadata, setMetadata] = useState(null);
-  const [error] = useState(null);
+  // const [metadata, setMetadata] = useState(null);
+  // const [error] = useState(null);
 
   const [baselinePolicy, setBaselinePolicy] = useState({
     id: baselinePolicyId,
@@ -85,22 +85,6 @@ export default function PolicyEngine() {
 
   const [hasShownHouseholdPopup, setHasShownHouseholdPopup] = useState(false);
   const [userProfile, setUserProfile] = useState({});
-
-  // Update the metadata state when something happens to the countryId (e.g. the user changes the country).
-  useEffect(() => {
-    try {
-      updateMetadata(countryId, setMetadata);
-    } catch (e) {
-      // Sometimes this fails. When it does, refresh the page, but only once (use a param in the URL to make sure it only happens once).
-      if (!searchParams.get("refreshed")) {
-        let newSearch = copySearchParams(searchParams);
-        newSearch.set("refreshed", true);
-        setSearchParams(newSearch);
-        window.location.reload();
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [countryId]);
 
   // Get the baseline policy data when the baseline policy ID changes.
   useEffect(() => {
@@ -262,6 +246,7 @@ export default function PolicyEngine() {
       <CookieConsent />
       <Routes>
         {/* Redirect from / to /[countryId] */}
+        {/*
         <Route path="/" element={<Navigate to={`/${countryId}`} />} />
 
         <Route path="/callback" element={<AuthCallback />} />
@@ -314,15 +299,19 @@ export default function PolicyEngine() {
           path="/us/trafwa-ctc-calculator"
           element={<TrafwaCalculator />}
         />
+        */}
 
         {/* redirect from /countryId/blog/slug to /countryId/research/slug */}
+        {/*
         <Route
           path="/:countryId/blog/:slug"
           element={<Navigate to={`/${countryId}/research/${pathParts[3]}`} />}
         />
+      */}
 
         {/* Redirect for unrecognized paths */}
-        <Route path="*" element={<Navigate to={`/${countryId}`} />} />
+
+        {/*<Route path="*" element={<Navigate to={`/${countryId}`} />} />*/}
       </Routes>
     </ConfigProvider>
   );
