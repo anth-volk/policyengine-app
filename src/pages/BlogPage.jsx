@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import useCountryId from "../hooks/useCountryId";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
@@ -46,9 +46,16 @@ const handleImageLoad = (path) => {
 
 export default function BlogPage() {
   // /uk/research/blog-slug-here
+  /*
   const url = window.location.pathname;
   const countryId = useCountryId();
   const postName = url.split("/")[3];
+  */
+  const { slug } = useParams();
+  const countryId = useCountryId();
+  const postName = slug;
+
+  console.log(slug);
 
   const post = posts.find((post) => post.slug === postName);
   const postDate = moment(post.date, "YYYY-MM-DD HH:mm:ss");

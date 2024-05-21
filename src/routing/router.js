@@ -53,6 +53,12 @@ export const router = createBrowserRouter([
           {
             path: "research",
             element: <Research />,
+            children: [
+              {
+                path: ":slug",
+                element: <BlogPage />
+              }
+            ]
           },
           {
             path: "donate",
