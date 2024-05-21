@@ -282,12 +282,12 @@ export default function PolicyEngine({ pathname }) {
       <Routes>
         {/* Redirect from / to /[countryId] */}
         {/*<Route path="/" element={<Navigate to={`/${countryId}`} />} />*/}
-        <Route path="/" element={<RedirectToCountry />}>
+        <Route path="/" element={<RedirectToCountry />} />
 
 
-        <Route path="/callback" element={<AuthCallback />} />
+        {/*<Route path="/callback" element={<AuthCallback />} />*/}
         <Route path="/:countryId" element={<Home />} />
-        <Route path="/:countryId/about" element={<About />} />
+        {/*<Route path="/:countryId/about" element={<About />} />
         <Route path="/:countryId/jobs" element={<Jobs />} />
         <Route path="/:countryId/testimonials" element={<Testimonials />} />
         <Route
@@ -335,16 +335,18 @@ export default function PolicyEngine({ pathname }) {
           path="/us/trafwa-ctc-calculator"
           element={<TrafwaCalculator />}
         />
+        */}
 
         {/* redirect from /countryId/blog/slug to /countryId/research/slug */}
+        {/*
         <Route
           path="/:countryId/blog/:slug"
           element={<Navigate to={`/${countryId}/research/${pathParts[3]}`} />}
         />
+      */}
 
         {/* Redirect for unrecognized paths */}
-        <Route path="*" element={<Navigate to={`/${countryId}`} />} />
-        </Route>
+        {/*<Route path="*" element={<Navigate to={`/${countryId}`} />} />*/}
       </Routes>
     </ConfigProvider>
   );
