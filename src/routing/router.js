@@ -82,26 +82,14 @@ export const router = createBrowserRouter([
         ]
         
       },
-      /*
       {
-        path: "/uk",
-        children: [
-          {
-            path: "cec",
-            element: <CitizensEconomicCouncil />
-          }
-        ]
+        path: "/uk/cec",
+        element: <CitizensEconomicCouncil />
       },
       {
-        path: "/us",
-        children: [
-          {
-            path: "trafwa-ctc-calculator",
-            element: <TrafwaCalculator />
-          }
-        ]
+        path: "/us/trafwa-ctc-calculator",
+        element: <TrafwaCalculator />
       }
-      */
     ]
  }
 ]);
