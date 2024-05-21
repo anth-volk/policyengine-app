@@ -31,7 +31,7 @@ function ApiStatus({ apiStatus, apiCategory, countryNames }) {
           }}
         >
           <p style={{ margin: 0, display: "flex" }}>
-            <span style={{ width: "30%" }}>{countryNames[apiRoute]}</span>
+            <span style={{ width: "30%" }}>{countryNames[apiRoute].singleWord}</span>
             <span style={{ width: "20%" }}>/{apiRoute}</span>
             <span style={{ width: "50%" }}>
               <strong>

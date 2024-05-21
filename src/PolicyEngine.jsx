@@ -31,6 +31,7 @@ import TACPage from "./pages/TermsAndConditions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { ConfigProvider } from "antd";
 import style from "./style";
+import RedirectToCountry from "./routing/RedirectToCountry";
 
 const PolicyPage = lazy(() => import("./pages/PolicyPage"));
 const HouseholdPage = lazy(() => import("./pages/HouseholdPage"));
@@ -280,7 +281,9 @@ export default function PolicyEngine({ pathname }) {
       <CookieConsent />
       <Routes>
         {/* Redirect from / to /[countryId] */}
-        <Route path="/" element={<Navigate to={`/${countryId}`} />} />
+        {/*<Route path="/" element={<Navigate to={`/${countryId}`} />} />*/}
+        <Route path="/" element={<RedirectToCountry />}>
+
 
         <Route path="/callback" element={<AuthCallback />} />
         <Route path="/:countryId" element={<Home />} />
@@ -341,6 +344,7 @@ export default function PolicyEngine({ pathname }) {
 
         {/* Redirect for unrecognized paths */}
         <Route path="*" element={<Navigate to={`/${countryId}`} />} />
+        </Route>
       </Routes>
     </ConfigProvider>
   );
