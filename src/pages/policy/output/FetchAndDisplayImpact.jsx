@@ -12,7 +12,6 @@ import { defaultYear } from "data/constants";
 import { areObjectsSame } from "../../../data/areObjectsSame";
 import { updateUserPolicy } from "../../../api/userPolicies";
 import useCountryId from "../../../hooks/useCountryId";
-// import LoadingCentered from "layout/LoadingCentered";
 
 /**
  *
@@ -56,11 +55,6 @@ export function FetchAndDisplayImpact(props) {
   function computingCallback(data) {
     // Position in queue message only occurs with average_time
     // in the response object; if this is present, enable message
-    /*
-    if (data.average_time && data.message) {
-      setQueueMsg(data.message);
-    }
-    */
     if (data.queue_position) {
       setQueuePos(data.queue_position);
     }
