@@ -17,12 +17,13 @@ import authors from "../posts/authors.json";
 import { MediumBlogPreview } from "./home/HomeBlogPreview";
 import Fuse from "fuse.js";
 import { useSearchParams } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import FontIcon from "../layout/FontIcon";
 import { Helmet } from "react-helmet";
 import { Checkbox } from "antd";
 import { useWindowHeight } from "../hooks/useWindow";
+import useCountryId from "../hooks/useCountryId";
 
 export default function Research() {
   return (
@@ -54,6 +55,15 @@ export default function Research() {
 function ResearchExplorer() {
   const displayCategory = useDisplayCategory();
   const [searchParams, setSearchParams] = useSearchParams();
+
+  // filters is an object whereby each key matches with an array of values;
+  // keys are "topics", "locations", "authors"
+  const [filters, setFilters] = useState(parseInitFiltersFromParams(searchParams));
+
+  useEffect(() => {
+    console.log(filters);
+  }, [filters]);
+
   const onSearch = (search) => {
     if (!search) {
       setSearchParams({});
@@ -63,59 +73,7 @@ function ResearchExplorer() {
     window.scrollTo(0, 0);
   };
 
-  const extractCountryIdFromPathname = () => {
-    const pathSegments = window.location.pathname.split("/").filter(Boolean);
-    if (pathSegments.length > 0) {
-      return pathSegments[0];
-    }
-  };
-
-  const initialLocations = locationTags.filter(
-    (location) =>
-      location === extractCountryIdFromPathname() ||
-      location.startsWith(extractCountryIdFromPathname() + "-") ||
-      location === "global",
-  );
-
-  const [filteredTopics, setFilteredTopics] = useState(
-    searchParams.get("topics")?.split(",") || topicTags,
-  );
-  const [filteredLocations, setFilteredLocations] = useState(
-    searchParams.get("locations")?.split(",") || initialLocations,
-  );
-
-  const authorKeys = Object.keys(authors);
-
-  const [filteredAuthors, setFilteredAuthors] = useState(
-    searchParams.get("authors")?.split(",") || authorKeys,
-  );
-  const filterFunction = (post) => {
-    let hasMetAtLeastOneFilteredTopic = false;
-    for (const tag of filteredTopics) {
-      if (post.tags.includes(tag)) {
-        hasMetAtLeastOneFilteredTopic = true;
-      }
-    }
-    let hasMetAtLeastOneFilteredLocation = false;
-    for (const tag of filteredLocations) {
-      if (post.tags.includes(tag)) {
-        hasMetAtLeastOneFilteredLocation = true;
-      }
-    }
-    let hasMetAtLeastOneFilteredAuthor = false;
-    for (const author of filteredAuthors) {
-      if (post.authors.includes(author)) {
-        hasMetAtLeastOneFilteredAuthor = true;
-      }
-    }
-    return (
-      hasMetAtLeastOneFilteredLocation &
-      hasMetAtLeastOneFilteredTopic &
-      hasMetAtLeastOneFilteredAuthor
-    );
-  };
-
-  const preFilteredPosts = posts.filter(filterFunction);
+  const preFilteredPosts = posts.filter((post) => postsFilter(post, filters));
   const fuse = new Fuse(preFilteredPosts, {
     keys: ["title"],
   });
@@ -131,12 +89,20 @@ function ResearchExplorer() {
   const searchTools = (
     <BlogPostSearchTools
       onSearch={onSearch}
+      /*
       filteredTopics={filteredTopics}
       filteredLocations={filteredLocations}
       setFilteredTopics={setFilteredTopics}
       setFilteredLocations={setFilteredLocations}
       filteredAuthors={filteredAuthors}
       setFilteredAuthors={setFilteredAuthors}
+      */
+      filteredTopics={filters.topics}
+      filteredLocations={filters.locations}
+      filteredAuthors={filters.authors}
+      setFilteredAuthors={()=>{}}
+      setFilteredLocations={()=>{}}
+      setFilteredTopics={()=>{}}
     />
   );
 
@@ -503,3 +469,80 @@ function AntCheckbox({ label, checked, onCheck }) {
     </div>
   );
 }
+
+function parseInitFiltersFromParams(searchParams) {
+
+  console.log(searchParams);
+
+  function extractCountryIdFromPathname() {
+    const pathSegments = window.location.pathname.split("/").filter(Boolean);
+    if (pathSegments.length > 0) {
+      return pathSegments[0];
+    }
+  }
+
+  const countryId = extractCountryIdFromPathname();
+
+  const initialLocations = locationTags.filter((location) => 
+    location === countryId ||
+    location.startsWith(countryId.concat("-")) ||
+    location === "global"
+  );
+
+  const filters = {
+    topics: searchParams.get("topics")?.split(","),
+    locations: searchParams.get("locations")?.split(",") || initialLocations,
+    authors: searchParams.get("authors")?.split(",")
+  };
+
+  return filters;
+
+}
+
+/*
+
+
+  const [filteredTopics, setFilteredTopics] = useState(
+    searchParams.get("topics")?.split(",") || topicTags,
+  );
+  const [filteredLocations, setFilteredLocations] = useState(
+    searchParams.get("locations")?.split(",") || initialLocations,
+  );
+
+  const authorKeys = Object.keys(authors);
+
+  const [filteredAuthors, setFilteredAuthors] = useState(
+    searchParams.get("authors")?.split(",") || authorKeys,
+  );
+
+*/
+/**
+ * Filter posts using a filters object
+ * @param {Object} post An individual post
+ * @param {Object} filters The filters stateful object from ResearchExplorer
+ * @returns {Object} The filtered posts
+ */
+function postsFilter(post, filters) {
+
+  // This object maps filter categories to keys within each post object;
+  // the "default" key will be utilized in case a new filter is not added here
+  const filterPostMapping = {
+    "locations": "tags",
+    "topics": "tags",
+    "authors": "authors",
+    "default": "tags"
+  };
+
+  for (const filterCategory in filters) {
+    for (const filter of filters[filterCategory]) {
+      const mappedKey = filterPostMapping[filterCategory];
+
+      if (post[mappedKey].includes(filter)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
