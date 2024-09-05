@@ -40,7 +40,7 @@ const LINKS = [
   {
     title: "Docs",
     link: "docs",
-  }
+  },
 ];
 
 export default function Header() {
