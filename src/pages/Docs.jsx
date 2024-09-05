@@ -31,7 +31,7 @@ export default function Docs() {
   return (
     <>
       <Helmet>
-        <title>Docs | PolicyEngine</title>
+        <title>Documentation | PolicyEngine</title>
       </Helmet>
       <div>
         <Header />
