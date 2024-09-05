@@ -43,6 +43,7 @@ import CountryIdLayout from "./routing/CountryIdLayout";
 import RedirectBlogPost from "./routing/RedirectBlogPost";
 import { StatusPage } from "./pages/StatusPage";
 import ManifestosComparison from "./applets/ManifestosComparison";
+import Docs from "./pages/Docs";
 
 const PolicyPage = lazy(() => import("./pages/PolicyPage"));
 const HouseholdPage = lazy(() => import("./pages/HouseholdPage"));
@@ -292,6 +293,7 @@ export default function PolicyEngine() {
         <Route path="/:countryId" element={<CountryIdLayout />}>
           <Route index={true} element={<Home />} />
           <Route path="about" element={<About />} />
+          <Route path="docs" element={<Docs />} />
           <Route path="jobs" element={<Jobs />} />
           <Route path="testimonials" element={<Testimonials />} />
           <Route path="calculator" element={<CalculatorInterstitial />} />
