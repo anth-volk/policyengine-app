@@ -134,15 +134,13 @@ export default function ParameterEditor(props) {
           </p>
           <div
             style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              alignItems: "center",
+              display: "grid",
+              gridTemplateColumns: "60% 40%",
               gap: "10px",
+              alignItems: "end"
             }}
           >
-            <Space.Compact>
+            {/*<Space.Compact>*/}
               <PeriodSetter
                 metadata={metadata}
                 startDate={startDate}
@@ -150,6 +148,7 @@ export default function ParameterEditor(props) {
                 setStartDate={setStartDate}
                 setEndDate={setEndDate}
               />
+              {/*
               {startDate !== defaultStartDate || endDate !== defaultEndDate ? (
                 <Button
                   icon={<UndoOutlined />}
@@ -160,8 +159,8 @@ export default function ParameterEditor(props) {
                 />
               ) : (
                 <Button icon={<UndoOutlined />} disabled />
-              )}
-            </Space.Compact>
+              )}*/}
+            {/*</Space.Compact>*/}
             <ValueSetter
               startDate={startDate}
               endDate={endDate}
@@ -220,6 +219,16 @@ export default function ParameterEditor(props) {
   );
 }
 
+            /*
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              gap: "10px",
+            }}
+              */
 function PeriodSetter(props) {
   const { metadata, startDate, endDate, setStartDate, setEndDate } = props;
 
@@ -302,6 +311,36 @@ function PeriodSetter(props) {
   );
 
   return (
+    <Segmented
+      block
+      options={[
+        {
+          label: "Default",
+          value: "default",
+        },
+        {
+          label: "Yearly",
+          value: "yearly",
+        },
+        {
+          label: "Exact",
+          value: "date",
+        },
+        {
+          label: "Ten-Year",
+          value: "ten-year",
+        }
+      ]}
+      // width="100%"
+      onChange={handleSegmentedChange}
+      style={{
+        marginBottom: "10px",
+      }}
+    /> 
+  )
+
+  /*
+  return (
     <Popover trigger="click" content={popoverContent} placement="bottom">
       <Tooltip title="Click to edit parameter timespan">
         <Space.Compact>
@@ -317,6 +356,7 @@ function PeriodSetter(props) {
       </Tooltip>
     </Popover>
   );
+  */
 }
 
 function YearSetter(props) {
@@ -343,7 +383,6 @@ function DaySetter(props) {
   const { startDate, endDate, setStartDate, setEndDate, isEndForever, minPossibleDate, maxPossibleDate } = props;
 
   return (
-
     <RangePicker
       defaultValue={[moment(startDate), null]}
       value={[moment(startDate), isEndForever ? null : moment(endDate)]}
@@ -357,7 +396,6 @@ function DaySetter(props) {
       separator="→"
     />
   );
-
 }
 
 function ValueSetter(props) {
