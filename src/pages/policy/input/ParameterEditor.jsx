@@ -253,21 +253,6 @@ function PeriodSetter(props) {
     dateSelectButtonLabel = `from ${moment(startDate).year()} to ${moment(endDate).year()}:`;
   }
 
-  const dateSelector = (
-    <RangePicker
-      defaultValue={[moment(startDate), null]}
-      value={[moment(startDate), isEndForever ? null : moment(endDate)]}
-      onChange={(_, dateStrings) => {
-        setStartDate(dateStrings[0]);
-        setEndDate(dateStrings[1]);
-      }}
-      disabledDate={(date) =>
-        date.isBefore(minPossibleDate) || date.isAfter(maxPossibleDate)
-      }
-      separator="→"
-    />
-  );
-
   const popoverContent = (
     <div
       style={{
@@ -302,7 +287,17 @@ function PeriodSetter(props) {
             maxPossibleDate={maxPossibleDate}
             isEndForever={isEndForever}
           />
-           : dateSelector}
+          :
+          <DaySetter
+            startDate={startDate}
+            endDate={endDate}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+            isEndForever={isEndForever}
+            minPossibleDate={minPossibleDate}
+            maxPossibleDate={maxPossibleDate}
+          />
+      }
     </div>
   );
 
@@ -342,6 +337,27 @@ function YearSetter(props) {
       separator="→"
     />
   )
+}
+
+function DaySetter(props) {
+  const { startDate, endDate, setStartDate, setEndDate, isEndForever, minPossibleDate, maxPossibleDate } = props;
+
+  return (
+
+    <RangePicker
+      defaultValue={[moment(startDate), null]}
+      value={[moment(startDate), isEndForever ? null : moment(endDate)]}
+      onChange={(_, dateStrings) => {
+        setStartDate(dateStrings[0]);
+        setEndDate(dateStrings[1]);
+      }}
+      disabledDate={(date) =>
+        date.isBefore(minPossibleDate) || date.isAfter(maxPossibleDate)
+      }
+      separator="→"
+    />
+  );
+
 }
 
 function ValueSetter(props) {
