@@ -1,25 +1,25 @@
-import ThreeColumnPage from "../layout/ThreeColumnPage";
+import ThreeColumnPage from "../layout/ThreeColumnPage.jsx";
 import { useSearchParams } from "react-router-dom";
 import {
   createDefaultHousehold,
   getDefaultHouseholdId,
   findInTree,
   getNewHouseholdId,
-} from "../api/variables";
-import { copySearchParams, countryApiCall } from "../api/call";
+} from "../api/variables.js";
+import { copySearchParams, countryApiCall } from "../api/call.js";
 import { defaultYear } from "data/constants";
 import { useEffect, useState } from "react";
 import { Result } from "antd";
 
 import VariableEditor from "./household/input/VariableEditor";
-import LoadingCentered from "../layout/LoadingCentered";
+import LoadingCentered from "../layout/LoadingCentered.jsx";
 import MaritalStatus from "./household/input/MaritalStatus";
 import CountChildren from "./household/input/CountChildren";
 import HouseholdRightSidebar from "./household/HouseholdRightSidebar";
 import HouseholdOutput from "./household/output/HouseholdOutput";
-import useMobile from "../layout/Responsive";
-import FolderPage from "../layout/FolderPage";
-import StackedMenu from "../layout/StackedMenu";
+import useMobile from "../layout/Responsive.jsx";
+import FolderPage from "../layout/FolderPage.jsx";
+import StackedMenu from "../layout/StackedMenu.jsx";
 import HouseholdIntro from "./household/HouseholdIntro";
 import HOUSEHOLD_OUTPUT_TREE from "./household/output/tree";
 import VariableSearch from "./household/VariableSearch";

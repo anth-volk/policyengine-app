@@ -17,9 +17,9 @@ import { getPolicyOutputTree } from "pages/policy/output/tree";
 import SearchParamNavButton from "controls/SearchParamNavButton";
 import HOUSEHOLD_OUTPUT_TREE from "../pages/household/output/tree";
 import VariableSearch from "../pages/household/VariableSearch";
-import { ParameterSearch } from "../pages/PolicyPage.jsx";
-import PolicyRightSidebar from "../pages/policy/PolicyRightSidebar.jsx";
-import { impactKeys } from "../pages/policy/output/ImpactTypes.jsx";
+import { ParameterSearch } from "../pages/PolicyPage_old.jsx/index.js";
+import PolicyRightSidebar from "../pages/policy_old/PolicyRightSidebar.jsx";
+import { impactKeys } from "../pages/policy_old/output/ImpactTypes.jsx";
 
 import style from "../style";
 import colors from "../style/colors";

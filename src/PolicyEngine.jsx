@@ -50,8 +50,8 @@ import CTCComparison from "./applets/CTCComparison";
 import { wrappedResponseJson } from "./data/wrappedJson";
 import US2024ElectionCalculator from "./applets/US2024ElectionCalculator";
 
-const PolicyPage = lazy(() => import("./pages/PolicyPage"));
-const HouseholdPage = lazy(() => import("./pages/HouseholdPage"));
+// const PolicyPage = lazy(() => import("./pages/PolicyPage"));
+// const HouseholdPage = lazy(() => import("./pages/HouseholdPage"));
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -245,32 +245,32 @@ export default function PolicyEngine() {
     </>
   );
 
-  const householdPage = (
-    <Suspense fallback={loadingPage}>
-      <Header />
-      <HouseholdPage
-        metadata={metadata}
-        householdId={householdId}
-        policy={policy}
-        hasShownHouseholdPopup={hasShownHouseholdPopup}
-        setHasShownHouseholdPopup={setHasShownHouseholdPopup}
-      />
-    </Suspense>
-  );
+  // const householdPage = (
+  //   <Suspense fallback={loadingPage}>
+  //     <Header />
+  //     <HouseholdPage
+  //       metadata={metadata}
+  //       householdId={householdId}
+  //       policy={policy}
+  //       hasShownHouseholdPopup={hasShownHouseholdPopup}
+  //       setHasShownHouseholdPopup={setHasShownHouseholdPopup}
+  //     />
+  //   </Suspense>
+  // );
 
   const errorPage = <ErrorPage />;
 
-  const policyPage = (
-    <Suspense fallback={loadingPage}>
-      <Header />
-      <PolicyPage
-        metadata={metadata}
-        householdId={householdId}
-        policy={policy}
-        userProfile={userProfile}
-      />
-    </Suspense>
-  );
+  // const policyPage = (
+  //   <Suspense fallback={loadingPage}>
+  //     <Header />
+  //     <PolicyPage
+  //       metadata={metadata}
+  //       householdId={householdId}
+  //       policy={policy}
+  //       userProfile={userProfile}
+  //     />
+  //   </Suspense>
+  // );
 
   // If the path is /, redirect to /[countryId]
   // If the path is /[countryId], render the homepage
@@ -315,6 +315,7 @@ export default function PolicyEngine() {
           <Route path="privacy" element={<PrivacyPage />} />
           <Route path="terms" element={<TACPage />} />
 
+          {/*
           <Route
             path="household/*"
             element={
@@ -327,6 +328,7 @@ export default function PolicyEngine() {
               metadataError ? errorPage : metadata ? policyPage : loadingPage
             }
           />
+          */}
 
           <Route
             path="profile"

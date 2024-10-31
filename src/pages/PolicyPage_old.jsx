@@ -1,25 +1,25 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { copySearchParams } from "../api/call";
-import { findInTree } from "../api/variables";
-import SearchOptions from "../controls/SearchOptions";
-import FolderPage from "../layout/FolderPage";
-import LoadingCentered from "../layout/LoadingCentered";
+import { copySearchParams } from "../api/call.js";
+import { findInTree } from "../api/variables.js";
+import SearchOptions from "../controls/SearchOptions.jsx";
+import FolderPage from "../layout/FolderPage.jsx";
+import LoadingCentered from "../layout/LoadingCentered.jsx";
 import MobileCalculatorPage from "layout/MobileCalculatorPage";
-import useMobile from "../layout/Responsive";
-import StackedMenu from "../layout/StackedMenu";
-import ThreeColumnPage from "../layout/ThreeColumnPage";
-import ParameterEditor from "./policy/input/ParameterEditor";
-import PolicyOutput from "./policy/output/PolicyOutput";
-import PolicyRightSidebar from "./policy/PolicyRightSidebar";
-import ErrorComponent from "../layout/ErrorComponent";
-import { getPolicyOutputTree } from "./policy/output/tree";
+import useMobile from "../layout/Responsive.jsx";
+import StackedMenu from "../layout/StackedMenu.jsx";
+import ThreeColumnPage from "../layout/ThreeColumnPage.jsx";
+import ParameterEditor from "./policy_old/input/ParameterEditor.jsx";
+import PolicyOutput from "./policy_old/output/PolicyOutput.jsx";
+import PolicyRightSidebar from "./policy_old/PolicyRightSidebar.jsx";
+import ErrorComponent from "../layout/ErrorComponent.jsx";
+import { getPolicyOutputTree } from "./policy_old/output/tree.js";
 import { Helmet } from "react-helmet";
-import SearchParamNavButton from "../controls/SearchParamNavButton";
-import style from "../style";
-import DeprecationModal from "../modals/DeprecationModal";
-import { impactKeys } from "../pages/policy/output/ImpactTypes.jsx";
+import SearchParamNavButton from "../controls/SearchParamNavButton.jsx";
+import style from "../style/index.js";
+import DeprecationModal from "../modals/DeprecationModal.jsx";
+import { impactKeys } from "./policy_old/output/ImpactTypes.jsx";
 
 export function ParameterSearch(props) {
   const { metadata, callback } = props;
