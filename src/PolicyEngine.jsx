@@ -49,6 +49,7 @@ import DeveloperHome from "./pages/DeveloperHome";
 import CTCComparison from "./applets/CTCComparison";
 import { wrappedResponseJson } from "./data/wrappedJson";
 import US2024ElectionCalculator from "./applets/US2024ElectionCalculator";
+import useMetadataStore from "./stores/metadataStore";
 
 // const PolicyPage = lazy(() => import("./pages/PolicyPage"));
 // const HouseholdPage = lazy(() => import("./pages/HouseholdPage"));
@@ -80,8 +81,7 @@ export default function PolicyEngine() {
   const baselinePolicyId =
     searchParams.get("baseline") || defaultBaselinePolicy;
 
-  const [metadata, setMetadata] = useState(null);
-  const [metadataError, setMetadataError] = useState(false);
+  const { metadata, setMetadata, metadataError, setMetadataError } = useMetadataStore();
 
   const [baselinePolicy, setBaselinePolicy] = useState({
     id: baselinePolicyId,
