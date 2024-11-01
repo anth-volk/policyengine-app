@@ -50,7 +50,8 @@ import CTCComparison from "./applets/CTCComparison";
 import { wrappedResponseJson } from "./data/wrappedJson";
 import US2024ElectionCalculator from "./applets/US2024ElectionCalculator";
 import useMetadataStore from "./stores/metadataStore";
-import Calculator from "./pages/Calculator";
+import CalculatorWrapper from "./pages/CalculatorWrapper";
+import { STATES as CALC_STATES } from "./layout/CalculatorAccordion";
 
 // const PolicyPage = lazy(() => import("./pages/PolicyPage"));
 // const HouseholdPage = lazy(() => import("./pages/HouseholdPage"));
@@ -333,13 +334,13 @@ export default function PolicyEngine() {
           <Route
             path="household/*"
             element={
-              metadataError ? errorPage : metadata ? <Calculator /> : loadingPage
+              metadataError ? errorPage : metadata ? <CalculatorWrapper inputState={CALC_STATES.POPULATION}/> : loadingPage
             }
           />
           <Route
             path="policy/*"
             element={
-              metadataError ? errorPage : metadata ? <Calculator /> : loadingPage
+              metadataError ? errorPage : metadata ? <CalculatorWrapper inputState={CALC_STATES.REFORM}/> : loadingPage
             }
           />
 
