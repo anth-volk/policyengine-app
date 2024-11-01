@@ -1,6 +1,7 @@
 import { HEADER_HEIGHT } from "../style/spacing";
+import ReformAccordion from "./ReformAccordion";
 
-export const STATES = {
+export const CALCULATOR_STATES = {
   REFORM: "REFORM",
   POPULATION: "POPULATION",
   RESULTS: "RESULTS",
@@ -9,19 +10,19 @@ export const STATES = {
 
 export function calcGridSettings(state) {
   switch (state) {
-    case STATES.REFORM:
+    case CALCULATOR_STATES.REFORM:
       return {
-        gridTemplateColumns: "auto 30px",
-        gridTemplateRows: "auto 30px",
+        gridTemplateColumns: "auto 50px",
+        gridTemplateRows: "auto 50px",
       };
-    case STATES.POPULATION:
+    case CALCULATOR_STATES.POPULATION:
       return {
-        gridTemplateColumns: "auto 30px",
-        gridTemplateRows: "30px auto",
+        gridTemplateColumns: "auto 50px",
+        gridTemplateRows: "50px auto",
       };
-    case STATES.RESULTS:
+    case CALCULATOR_STATES.RESULTS:
       return {
-        gridTemplateColumns: "30px auto",
+        gridTemplateColumns: "50px auto",
         gridTemplateRows: "1fr 1fr",
       };
     default:
@@ -55,7 +56,7 @@ export default function CalculatorAccordion(props) {
             gridArea: "reform",
           }}
         >
-          <p>REFORM</p>
+          {<ReformAccordion inputState={inputState} />} 
         </div>
         <div style={{ gridArea: "population", }}>
           <p>POPULATION</p>

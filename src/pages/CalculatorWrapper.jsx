@@ -14,7 +14,6 @@ export default function CalculatorWrapper(props) {
       </Helmet>
       <Header />
       <CalculatorAccordion inputState={inputState} />
-      <Footer />
     </>
   );
 }
