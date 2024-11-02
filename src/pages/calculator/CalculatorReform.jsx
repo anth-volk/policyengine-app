@@ -8,7 +8,7 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 
 const INPUT_MODES = {
   CURRENT_LAW: 'current-law',
-  COMMON_REFORM: 'common-reform',
+  FEATURED_REFORM: 'featured-reform',
   CUSTOM_REFORM: 'custom-reform',
 };
 
@@ -43,7 +43,7 @@ export default function CalculatorReform(props) {
             paddingTop: "8px",
             color: style.colors.DARK_GRAY
           }}
-        >Create a policy or reform</h6>
+        >Choose a policy or create one yourself</h6>
       </div>
       <p
         style={{
@@ -72,9 +72,9 @@ function ReformInputButtonGroup(props) {
         />
         <ReformInputButton
           inputMode={inputMode}
-          value={INPUT_MODES.DEFINED_REFORM}
-          label="A defined reform"
-          tooltip="Choose from a list of predefined reforms."
+          value={INPUT_MODES.FEATURED_REFORM}
+          label="A featured reform"
+          tooltip="Choose from a list of featured reforms."
         />
         <ReformInputButton
           inputMode={inputMode}
