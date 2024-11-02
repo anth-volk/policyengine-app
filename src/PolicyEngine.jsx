@@ -51,6 +51,7 @@ import { wrappedResponseJson } from "./data/wrappedJson";
 import US2024ElectionCalculator from "./applets/US2024ElectionCalculator";
 import useMetadataStore from "./stores/metadataStore";
 import Calculator from "./pages/Calculator";
+import { CALCULATOR_MODES } from "./pages/Calculator";
 
 // const PolicyPage = lazy(() => import("./pages/PolicyPage"));
 // const HouseholdPage = lazy(() => import("./pages/HouseholdPage"));
@@ -333,13 +334,13 @@ export default function PolicyEngine() {
           <Route
             path="household/*"
             element={
-              metadataError ? errorPage : metadata ? <Calculator /> : loadingPage
+              metadataError ? errorPage : metadata ? <Calculator mode={CALCULATOR_MODES.HOUSEHOLD}/> : loadingPage
             }
           />
           <Route
             path="policy/*"
             element={
-              metadataError ? errorPage : metadata ? <Calculator /> : loadingPage
+              metadataError ? errorPage : metadata ? <Calculator mode={CALCULATOR_MODES.POLICY}/> : loadingPage
             }
           />
 
