@@ -51,7 +51,7 @@ export default function CalculatorReform(props) {
           paddingTop: "24px",
         }}
       >I want to apply the following type of reform: </p>
-      <ReformInputModeButton 
+      <ReformInputButtonGroup
         inputMode={inputMode}
         setInputMode={setInputMode}
       />
@@ -59,50 +59,52 @@ export default function CalculatorReform(props) {
   );
 }
 
-function ReformInputModeButton(props) {
+function ReformInputButtonGroup(props) {
   const { inputMode, setInputMode } = props;
 
   return (
       <Radio.Group buttonStyle="solid" value={inputMode} onChange={(e) => setInputMode(e.target.value)}>
-        <Radio.Button 
+        <ReformInputButton
+          inputMode={inputMode}
           value={INPUT_MODES.CURRENT_LAW}
-        >
-          The current law
-          <Tooltip title="The legal status quo. Use this if you're calculating your own taxes and benefits.">
-            <span style={{
-              marginLeft: "8px",
-              color: inputMode === INPUT_MODES.CURRENT_LAW ? style.colors.WHITE : style.colors.DARK_GRAY
-            }}>
-              <QuestionCircleOutlined />
-            </span>
-          </Tooltip>
-        </Radio.Button>
-        <Radio.Button 
-          value={INPUT_MODES.COMMON_REFORM}
-        >
-          A common reform
-          <Tooltip title="Choose from one of a few common reforms.">
-            <span style={{
-              marginLeft: "8px",
-              color: inputMode === INPUT_MODES.COMMON_REFORM ? style.colors.WHITE : style.colors.DARK_GRAY
-            }}>
-              <QuestionCircleOutlined />
-            </span>
-          </Tooltip>
-        </Radio.Button>
-        <Radio.Button 
+          label="The current law"
+          tooltip="The legal status quo. Use this if you're calculating your own taxes and benefits."
+        />
+        <ReformInputButton
+          inputMode={inputMode}
+          value={INPUT_MODES.DEFINED_REFORM}
+          label="A defined reform"
+          tooltip="Choose from a list of predefined reforms."
+        />
+        <ReformInputButton
+          inputMode={inputMode}
           value={INPUT_MODES.CUSTOM_REFORM}
-        >
-          A custom reform
-          <Tooltip title="Choose what reform parameters you want to modify.">
-            <span style={{
-              marginLeft: "8px",
-              color: inputMode === INPUT_MODES.CUSTOM_REFORM ? style.colors.WHITE : style.colors.DARK_GRAY
-            }}>
-              <QuestionCircleOutlined />
-            </span>
-          </Tooltip>
-        </Radio.Button>
+          label="A custom reform"
+          tooltip="Choose what reform parameters you want to modify."
+        />
       </Radio.Group>
+  );
+}
+
+function ReformInputButton(props) {
+  const { inputMode, value, label, tooltip } = props;
+
+  return (
+    <Radio.Button 
+      value={value}
+      style={{
+        fontSize: "16px",
+      }}
+    >
+      {label}
+      <Tooltip title={tooltip}>
+        <span style={{
+          marginLeft: "8px",
+          color: inputMode === value ? style.colors.WHITE : style.colors.DARK_GRAY
+        }}>
+          <QuestionCircleOutlined />
+        </span>
+      </Tooltip>
+    </Radio.Button>
   );
 }
