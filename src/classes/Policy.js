@@ -1,11 +1,19 @@
 /**
- * Standardized class for policy objects
- * @param {Object | null} baseline The baseline policy's data object
- * @param {Object | null} reform The reform policy's data object
+ * Standardized class for reform objects
+ * @param {Object | null} data The reform's data object
+ * @param {String} label The reform's label
  */
-export default class Policy {
-  constructor(baseline, reform) {
-    this.baseline = baseline;
-    this.reform = reform;
+export default class Reform {
+  constructor(data, label) {
+    this.data = this.#populate_data(data);
+    this.label = label;
+  }
+
+  #populate_data(data) {
+    let output = {};
+    for (const [key, dataObject] of data) {
+      output[key] = new Param(dataObject);
+    }
+    return output;
   }
 }
