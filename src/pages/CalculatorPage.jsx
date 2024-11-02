@@ -1,10 +1,9 @@
 import Header from "../layout/Header";
-import { HEADER_HEIGHT } from "../style/spacing";
 import CalculatorPopulation from "./calculator/CalculatorPopulation";
 import CalculatorReform from "./calculator/CalculatorReform";
 import LeftHandSidebar from "./calculator/LeftHandSidebar";
 
-export const CALCULATOR_MODES = {
+export const CALC_DISPLAY_MODES = {
   HOUSEHOLD: 'household',
   POLICY: 'policy',
 };
