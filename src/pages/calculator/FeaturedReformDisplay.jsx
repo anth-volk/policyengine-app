@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import style from "../../style";
 
 export default function FeaturedReformDisplay(props) {
   const {setPolicy} = props;
@@ -14,22 +15,30 @@ export default function FeaturedReformDisplay(props) {
       <div
         style={{
           height: "100%",
-          minWidth: "125px",
-          maxWidth: "250px",
           flexBasis: 0,
           flex: "1 1 0px",
-          cursor: "pointer"
+          cursor: "pointer",
+          backgroundColor: style.colors.BLUE_95,
+          padding: "12px",
         }}
         key={"reform-" + index}
         onClick={() => handleClick(reform.params)}
       >
         <p>{reform.title}</p>
-        <p>{reform.description}</p>
+        <p
+          style={{
+            marginBottom: "8px",
+            fontSize: "12px",
+            color: style.colors.DARK_GRAY
+          }}
+        >{reform.description}</p>
         <nav
           style={{
-            color: "blue",
+            color: style.colors.BLUE_PRIMARY,
             cursor: "pointer",
-            textDecoration: "underline",
+            margin: 0,
+            fontSize: "12px",
+            textDecoration: "underline"
           }}
           onClick={() => navigate(reform.link)}
         >View article</nav>
@@ -41,11 +50,10 @@ export default function FeaturedReformDisplay(props) {
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "flex-start",
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
         width: "100%",
+        gap: "8px"
       }}
     >
       {featuredReformJSX}

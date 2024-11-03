@@ -27,7 +27,6 @@ export default function CalculatorReform(props) {
     <div
       style={{
         minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
-        padding: "0 12px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "flext-start",
@@ -66,7 +65,7 @@ function InputModeDisplay(props) {
   const { inputMode, setPolicy } = props;
 
   return (
-    <div>
+    <div style={{width: "100%"}}>
       {/*{inputMode === INPUT_MODES.CURRENT_LAW && <CurrentLawDisplay />}*/}
       {inputMode === INPUT_MODES.FEATURED_REFORM && <FeaturedReformDisplay setPolicy={setPolicy} />}
       {/*{inputMode === INPUT_MODES.CUSTOM_REFORM && <CustomReformDisplay />}*/}
@@ -87,13 +86,13 @@ function ReformInputButtonGroup(props) {
   }
 
   return (
-    <div>
+    <div style={{width: "100%"}}>
       <p
         style={{
           marginBottom: "2px",
         }}
       >I want to apply the following type of reform: </p>
-      <Radio.Group buttonStyle="solid" value={inputMode} onChange={(e) => setInputMode(e.target.value)}>
+      <Radio.Group buttonStyle="solid" block value={inputMode} onChange={(e) => setInputMode(e.target.value)}>
         <ReformInputButton
           inputMode={inputMode}
           value={INPUT_MODES.CURRENT_LAW}

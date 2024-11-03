@@ -22,8 +22,10 @@ export default function CalculatorPage(props) {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '30% 70%',
+          // Note: Right column is empty
+          gridTemplateColumns: '25% 50% 25%',
           paddingTop: "80px",
+          gap: "24px"
         }}
       >
         <LeftHandSidebar />
