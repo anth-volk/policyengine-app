@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Policy from "../classes/Policy.js";
 import Header from "../layout/Header";
 import CalculatorPopulation from "./calculator/CalculatorPopulation";

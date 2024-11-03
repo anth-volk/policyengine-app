@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 
 export default function FeaturedReformDisplay(props) {
   const {setPolicy} = props;
+
+  const navigate = useNavigate();
 
   function handleClick(params) {
     setPolicy((prev) => prev.updateReform(params));
@@ -14,13 +17,22 @@ export default function FeaturedReformDisplay(props) {
           minWidth: "125px",
           maxWidth: "250px",
           flexBasis: 0,
-          flex: "1 1 0px"
+          flex: "1 1 0px",
+          cursor: "pointer"
         }}
         key={"reform-" + index}
         onClick={() => handleClick(reform.params)}
       >
         <p>{reform.title}</p>
         <p>{reform.description}</p>
+        <nav
+          style={{
+            color: "blue",
+            cursor: "pointer",
+            textDecoration: "underline",
+          }}
+          onClick={() => navigate(reform.link)}
+        >View article</nav>
       </div>
     )
   })
@@ -46,6 +58,7 @@ export const featuredReformData = [
   {
     title: "Donald Trump's 2024 Economic Agenda",
     description: "A comprehensive look at the economic policies of the Trump campaign",
+    link: "/us/research/trump-2024",
     params: {
         "gov.irs.credits.ctc.amount.adult_dependent": {
           "2026-01-01.2100-12-31": 500
@@ -664,6 +677,7 @@ export const featuredReformData = [
   {
     title: "Kamala Harris's Earned Income Tax Credit Proposal",
     description: "View the impacts of the Harris campaign's proposed EITC expansion",
+    link: "/us/research/harris-eitc",
     params: {
       "gov.irs.credits.eitc.eligibility.age.max": {
         "2024-01-01.2033-12-31": 100
@@ -717,6 +731,7 @@ export const featuredReformData = [
   {
     title: "Exempting Social Security Benefits from Income Taxation",
     description: "Simulate a key proposal from the Trump campaign",
+    link: "/us/research/social-security-tax-exemption",
     params: {
       "gov.irs.income.social_security.taxability.rate.additional": {
         "2024-01-01.2100-12-31": 0
@@ -729,6 +744,7 @@ export const featuredReformData = [
   {
     title: "Kamala Harris's Child Tax Credit Proposal",
     description: "View the impacts of the Harris campaign's proposed CTC expansion",
+    link: "/us/research/harris-ctc",
     params: {
       "gov.contrib.congress.delauro.american_family_act.baby_bonus": {
         "2025-01-01.2100-12-31": 2400

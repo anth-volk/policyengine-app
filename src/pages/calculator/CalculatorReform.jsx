@@ -32,6 +32,7 @@ export default function CalculatorReform(props) {
         flexDirection: "column",
         justifyContent: "flext-start",
         alignItems: "flex-start",
+        gap: "24px",
       }}
     >
       <div>
@@ -48,12 +49,6 @@ export default function CalculatorReform(props) {
           }}
         >Choose a policy or create one yourself</h6>
       </div>
-      <p
-        style={{
-          marginBottom: "2px",
-          paddingTop: "24px",
-        }}
-      >I want to apply the following type of reform: </p>
       <ReformInputButtonGroup
         inputMode={inputMode}
         setInputMode={setInputMode}
@@ -92,6 +87,12 @@ function ReformInputButtonGroup(props) {
   }
 
   return (
+    <div>
+      <p
+        style={{
+          marginBottom: "2px",
+        }}
+      >I want to apply the following type of reform: </p>
       <Radio.Group buttonStyle="solid" value={inputMode} onChange={(e) => setInputMode(e.target.value)}>
         <ReformInputButton
           inputMode={inputMode}
@@ -104,7 +105,7 @@ function ReformInputButtonGroup(props) {
           inputMode={inputMode}
           value={INPUT_MODES.FEATURED_REFORM}
           label="A featured reform"
-          tooltip="Choose from a list of featured reforms."
+          tooltip="Choose from a list of reforms featured in our articles."
         />
         <ReformInputButton
           inputMode={inputMode}
@@ -113,6 +114,7 @@ function ReformInputButtonGroup(props) {
           tooltip="Choose what reform parameters you want to modify."
         />
       </Radio.Group>
+    </div>
   );
 }
 
