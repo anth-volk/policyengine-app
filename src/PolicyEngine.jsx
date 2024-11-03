@@ -334,13 +334,13 @@ export default function PolicyEngine() {
           <Route
             path="household/*"
             element={
-              metadataError ? errorPage : metadata ? <CalculatorPage displayMode={CALC_DISPLAY_MODES.HOUSEHOLD}/> : loadingPage
+              metadataError ? errorPage : metadata ? <CalculatorPage displayMode={CALC_DISPLAY_MODES.HOUSEHOLD} metadata={metadata}/> : loadingPage
             }
           />
           <Route
             path="policy/*"
             element={
-              metadataError ? errorPage : metadata ? <CalculatorPage displayMode={CALC_DISPLAY_MODES.POLICY}/> : loadingPage
+              metadataError ? errorPage : metadata ? <CalculatorPage displayMode={CALC_DISPLAY_MODES.POLICY} metadata={metadata}/> : loadingPage
             }
           />
 

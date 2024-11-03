@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import Policy from "../classes/Policy.js";
 import Header from "../layout/Header";
 import CalculatorPopulation from "./calculator/CalculatorPopulation";
 import CalculatorReform from "./calculator/CalculatorReform";
@@ -8,8 +10,10 @@ export const CALC_DISPLAY_MODES = {
   POLICY: 'policy',
 };
 
-export default function Calculator(props) {
-  const { mode } = props;
+export default function CalculatorPage(props) {
+  const { mode, metadata } = props;
+
+  const [policy, setPolicy] = useState(new Policy());
 
   return (
     <>
@@ -24,6 +28,9 @@ export default function Calculator(props) {
         <LeftHandSidebar />
         <div>
           <CalculatorReform 
+            policy={policy}
+            setPolicy={setPolicy}
+            metadata={metadata}
           />
           <CalculatorPopulation 
           />
