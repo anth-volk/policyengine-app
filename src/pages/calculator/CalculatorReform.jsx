@@ -5,7 +5,7 @@ import { CALC_DISPLAY_MODES } from "../CalculatorPage";
 import { Radio, Tooltip } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import Policy from "../../classes/Policy";
-import useCountryId from "../../hooks/useCountryId";
+import FeaturedReformDisplay from "./FeaturedReformDisplay";
 
 const INPUT_MODES = {
   CURRENT_LAW: 'current-law',
@@ -91,6 +91,19 @@ export default function CalculatorReform(props) {
         setPolicy={setPolicy}
         defaultPolicy={defaultPolicy}
       />
+      <InputModeDisplay inputMode={inputMode}/>
+    </div>
+  );
+}
+
+function InputModeDisplay(props) {
+  const { inputMode } = props;
+
+  return (
+    <div>
+      {/*{inputMode === INPUT_MODES.CURRENT_LAW && <CurrentLawDisplay />}*/}
+      {inputMode === INPUT_MODES.FEATURED_REFORM && <FeaturedReformDisplay />}
+      {/*{inputMode === INPUT_MODES.CUSTOM_REFORM && <CustomReformDisplay />}*/}
     </div>
   );
 }
