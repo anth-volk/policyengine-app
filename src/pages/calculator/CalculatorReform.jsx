@@ -6,6 +6,7 @@ import { Radio, Tooltip } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import Policy from "../../classes/Policy";
 import FeaturedReformDisplay from "./FeaturedReformDisplay";
+import useCountryId from "../../hooks/useCountryId";
 
 const INPUT_MODES = {
   CURRENT_LAW: 'current-law',
@@ -13,46 +14,14 @@ const INPUT_MODES = {
   CUSTOM_REFORM: 'custom-reform',
 };
 
-
-export const baselinePolicyUK = {
-  baseline: {
-    data: {},
-    label: "Current law",
-    id: 1,
-  },
-  reform: {
-    data: {},
-    label: "Current law",
-    id: 1,
-  },
-};
-
-export const baselinePolicyUS = {
-  baseline: {
-    data: {},
-    label: "Current law",
-    id: 2,
-  },
-  reform: {
-    data: {},
-    label: "Current law",
-    id: 2,
-  },
-};
-
 export default function CalculatorReform(props) {
 
-  const { displayMode, policy, setPolicy, metadata } = props;
+  const { displayMode, policy, setPolicy } = props;
 
   const defaultInputMode = displayMode === CALC_DISPLAY_MODES.HOUSEHOLD ? INPUT_MODES.CURRENT_LAW : CALC_DISPLAY_MODES.POLICY ? INPUT_MODES.DEFINED_REFORM : INPUT_MODES.CURRENT_LAW;
 
   const [inputMode, setInputMode] = useState(defaultInputMode);
 
-  const defaultPolicy = {
-    data: {},
-    label: "Current law",
-    id: metadata.current_law_id,
-  }
 
   return (
     <div
@@ -89,32 +58,35 @@ export default function CalculatorReform(props) {
         inputMode={inputMode}
         setInputMode={setInputMode}
         setPolicy={setPolicy}
-        defaultPolicy={defaultPolicy}
       />
-      <InputModeDisplay inputMode={inputMode}/>
+      <InputModeDisplay 
+        inputMode={inputMode}
+        setPolicy={setPolicy}
+      />
     </div>
   );
 }
 
 function InputModeDisplay(props) {
-  const { inputMode } = props;
+  const { inputMode, setPolicy } = props;
 
   return (
     <div>
       {/*{inputMode === INPUT_MODES.CURRENT_LAW && <CurrentLawDisplay />}*/}
-      {inputMode === INPUT_MODES.FEATURED_REFORM && <FeaturedReformDisplay />}
+      {inputMode === INPUT_MODES.FEATURED_REFORM && <FeaturedReformDisplay setPolicy={setPolicy} />}
       {/*{inputMode === INPUT_MODES.CUSTOM_REFORM && <CustomReformDisplay />}*/}
     </div>
   );
 }
 
 function ReformInputButtonGroup(props) {
-  const { inputMode, setInputMode, setPolicy, defaultPolicy } = props;
+  const { inputMode, setInputMode, setPolicy } = props;
 
+  const countryId = useCountryId();
   function handleClick(e) {
     const value = e.target.value;
     if (value === INPUT_MODES.CURRENT_LAW) {
-      setPolicy(new Policy(defaultPolicy, defaultPolicy));
+      setPolicy(new Policy().setDefaultPolicy(countryId));
     }
     setInputMode(value);
   }

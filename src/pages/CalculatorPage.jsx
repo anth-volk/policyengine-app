@@ -13,7 +13,8 @@ export const CALC_DISPLAY_MODES = {
 export default function CalculatorPage(props) {
   const { mode, metadata } = props;
 
-  const [policy, setPolicy] = useState(new Policy());
+  const countryId = metadata.countryId;
+  const [policy, setPolicy] = useState(new Policy().setDefaultPolicy(countryId));
 
   return (
     <>
@@ -30,7 +31,6 @@ export default function CalculatorPage(props) {
           <CalculatorReform 
             policy={policy}
             setPolicy={setPolicy}
-            metadata={metadata}
           />
           <CalculatorPopulation 
           />

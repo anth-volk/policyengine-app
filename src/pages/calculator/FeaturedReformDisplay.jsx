@@ -1,9 +1,9 @@
 
 export default function FeaturedReformDisplay(props) {
+  const {setPolicy} = props;
 
   function handleClick(params) {
-    // TODO: Update Policy class to allow updating one part of policy
-    console.log(params);
+    setPolicy((prev) => prev.updateReform(params));
   }
 
   const featuredReformJSX = featuredReformData.map((reform, index) => {
