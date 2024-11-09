@@ -10,6 +10,16 @@ export default function FeaturedReformDisplay(props) {
     setPolicy((prev) => prev.updateReform(params));
   }
 
+  function handleMouseOver(e) {
+    e.target.style.backgroundColor = style.colors.BLUE_PRIMARY;
+    e.target.style.color = style.colors.WHITE;
+  }
+
+  function handleMouseOut(e) {
+    e.target.style.backgroundColor = style.colors.WHITE;
+    e.target.style.color = style.colors.BLUE_PRIMARY;
+  }
+
   const featuredReformJSX = featuredReformData.map((reform, index) => {
     return (
       <div
@@ -18,10 +28,13 @@ export default function FeaturedReformDisplay(props) {
           flexBasis: 0,
           flex: "1 1 0px",
           cursor: "pointer",
-          backgroundColor: style.colors.BLUE_95,
+          backgroundColor: style.colors.WHITE,
+          border: `1px solid ${style.colors.BLUE_PRIMARY}`,
           padding: "12px",
         }}
         key={"reform-" + index}
+        onMouseOver={(e) => handleMouseOver(e)}
+        onMouseOut={(e) => handleMouseOut(e)}
         onClick={() => handleClick(reform.params)}
       >
         <p>{reform.title}</p>

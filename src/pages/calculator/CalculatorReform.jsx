@@ -22,7 +22,6 @@ export default function CalculatorReform(props) {
 
   const [inputMode, setInputMode] = useState(defaultInputMode);
 
-
   return (
     <div
       style={{

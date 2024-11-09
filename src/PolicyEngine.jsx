@@ -56,7 +56,7 @@ import { CALC_DISPLAY_MODES } from "./pages/CalculatorPage";
 // const PolicyPage = lazy(() => import("./pages/PolicyPage"));
 // const HouseholdPage = lazy(() => import("./pages/HouseholdPage"));
 
-function ScrollToTop() {
+export function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
