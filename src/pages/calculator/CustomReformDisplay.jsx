@@ -1,5 +1,97 @@
-export default function CustomReformDisplay(props) {
+import { DownOutlined } from "@ant-design/icons";
 
+export default function CustomReformDisplay(props) {
+  const { setPolicy } = props;
+
+  const sectionsJSX = paramHeaders.map((section, i) => {
+    const paramsJSX = section.params.map((param, j) => {
+      return (
+        <div 
+          key={j}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            border: "1px solid #ccc",
+            width: "100%",
+            padding: "0px 8px"
+          }}
+        >
+          <p
+            style={{
+              fontSize: "1rem",
+              margin: 0
+            }}
+          >
+            {param.name}
+          </p>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "#666",
+                fontFamily: "Roboto",
+                fontWeight: "300",
+                margin: 0
+              }}
+            >{param.description}</p>
+            <button
+              style={{
+                backgroundColor: "#f0f0f0",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                padding: "4px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <DownOutlined />
+            </button>
+          </div>
+        </div>
+      );
+    });
+
+    return (
+      <div key={i}>
+        <h4
+          style={{
+            fontSize: "1.25rem"
+          }}
+        >{section.title}</h4>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            gap: "8px",
+            width: "100%"
+          }}
+        >
+          {paramsJSX}
+        </div>
+      </div>
+    );
+  });
+
+  return (
+    <div style={{
+      height: "100%",
+    }}>
+      {sectionsJSX}
+    </div>
+  );
+      
 }
 
 export const paramHeaders = [

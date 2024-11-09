@@ -7,6 +7,7 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 import Policy from "../../classes/Policy";
 import FeaturedReformDisplay from "./FeaturedReformDisplay";
 import useCountryId from "../../hooks/useCountryId";
+import CustomReformDisplay from "./CustomReformDisplay";
 
 const INPUT_MODES = {
   CURRENT_LAW: 'current-law',
@@ -25,7 +26,7 @@ export default function CalculatorReform(props) {
   return (
     <div
       style={{
-        minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
+        height: `calc(100vh - ${HEADER_HEIGHT}px)`,
         display: "flex",
         flexDirection: "column",
         justifyContent: "flext-start",
@@ -64,10 +65,10 @@ function InputModeDisplay(props) {
   const { inputMode, setPolicy } = props;
 
   return (
-    <div style={{width: "100%"}}>
+    <div style={{width: "100%", paddingBottom: "6px", overflow: "scroll"}}>
       {/*{inputMode === INPUT_MODES.CURRENT_LAW && <CurrentLawDisplay />}*/}
       {inputMode === INPUT_MODES.FEATURED_REFORM && <FeaturedReformDisplay setPolicy={setPolicy} />}
-      {/*{inputMode === INPUT_MODES.CUSTOM_REFORM && <CustomReformDisplay />}*/}
+      {inputMode === INPUT_MODES.CUSTOM_REFORM && <CustomReformDisplay setPolicy={setPolicy} />}
     </div>
   );
 }
