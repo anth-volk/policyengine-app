@@ -9,13 +9,15 @@ export default function FeaturedReformDisplay(props) {
   const navigate = useNavigate();
 
   const [hoveredItem, setHoveredItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
 
-  function handleClick(params) {
+  function handleClick(params, index) {
     setPolicy((prev) => prev.updateReform(params));
+    setSelectedItem(index);
   }
 
   const featuredReformJSX = featuredReformData.map((reform, index) => {
-    const isHovered = hoveredItem === index;
+    const shouldBeDark = hoveredItem === index || selectedItem === index;
     return (
       <div
         style={{
@@ -25,31 +27,31 @@ export default function FeaturedReformDisplay(props) {
           flexBasis: 0,
           flex: "1 1 0px",
           cursor: "pointer",
-          backgroundColor: isHovered ? style.colors.BLUE_PRIMARY : style.colors.WHITE,
+          backgroundColor: shouldBeDark ? style.colors.BLUE_PRIMARY : style.colors.WHITE,
           border: `1px solid rgb(217, 217, 217)`,
           padding: "12px",
         }}
         key={"reform-" + index}
         onMouseOver={() => setHoveredItem(index)}
         onMouseOut={() => setHoveredItem(null)}
-        onClick={() => handleClick(reform.params)}
+        onClick={() => handleClick(reform.params, index)}
       >
         <p
           style={{
-            color: isHovered ? style.colors.WHITE : style.colors.BLACK
+            color: shouldBeDark ? style.colors.WHITE : style.colors.BLACK
           }}
         >{reform.title}</p>
         <p
           style={{
             marginBottom: "8px",
             fontSize: "12px",
-            color: isHovered ? style.colors.WHITE : style.colors.DARK_GRAY
+            color: shouldBeDark ? style.colors.WHITE : style.colors.DARK_GRAY
           }}
         >{reform.description}</p>
         <nav
           style={{
             display: "block",
-            color: isHovered ? style.colors.BLUE_95: style.colors.BLUE_PRIMARY,
+            color: shouldBeDark ? style.colors.BLUE_95: style.colors.BLUE_PRIMARY,
             cursor: "pointer",
             margin: 0,
             fontSize: "12px",
