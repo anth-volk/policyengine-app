@@ -1,57 +1,60 @@
 import { useNavigate } from "react-router-dom";
 import style from "../../style";
+import { useState } from "react";
+import { set } from "react-ga";
 
 export default function FeaturedReformDisplay(props) {
   const {setPolicy} = props;
 
   const navigate = useNavigate();
 
+  const [hoveredItem, setHoveredItem] = useState(null);
+
   function handleClick(params) {
     setPolicy((prev) => prev.updateReform(params));
   }
 
-  function handleMouseOver(e) {
-    e.target.style.backgroundColor = style.colors.BLUE_PRIMARY;
-    e.target.style.color = style.colors.WHITE;
-  }
-
-  function handleMouseOut(e) {
-    e.target.style.backgroundColor = style.colors.WHITE;
-    e.target.style.color = style.colors.BLUE_PRIMARY;
-  }
-
   const featuredReformJSX = featuredReformData.map((reform, index) => {
+    const isHovered = hoveredItem === index;
     return (
       <div
         style={{
+          display: "flex",
+          flexDirection: "column",
           height: "100%",
           flexBasis: 0,
           flex: "1 1 0px",
           cursor: "pointer",
-          backgroundColor: style.colors.WHITE,
-          border: `1px solid ${style.colors.BLUE_PRIMARY}`,
+          backgroundColor: isHovered ? style.colors.BLUE_PRIMARY : style.colors.WHITE,
+          border: `1px solid rgb(217, 217, 217)`,
           padding: "12px",
         }}
         key={"reform-" + index}
-        onMouseOver={(e) => handleMouseOver(e)}
-        onMouseOut={(e) => handleMouseOut(e)}
+        onMouseOver={() => setHoveredItem(index)}
+        onMouseOut={() => setHoveredItem(null)}
         onClick={() => handleClick(reform.params)}
       >
-        <p>{reform.title}</p>
+        <p
+          style={{
+            color: isHovered ? style.colors.WHITE : style.colors.BLACK
+          }}
+        >{reform.title}</p>
         <p
           style={{
             marginBottom: "8px",
             fontSize: "12px",
-            color: style.colors.DARK_GRAY
+            color: isHovered ? style.colors.WHITE : style.colors.DARK_GRAY
           }}
         >{reform.description}</p>
         <nav
           style={{
-            color: style.colors.BLUE_PRIMARY,
+            display: "block",
+            color: isHovered ? style.colors.BLUE_95: style.colors.BLUE_PRIMARY,
             cursor: "pointer",
             margin: 0,
             fontSize: "12px",
-            textDecoration: "underline"
+            textDecoration: "underline",
+            marginTop: "auto",
           }}
           onClick={() => navigate(reform.link)}
         >View article</nav>
