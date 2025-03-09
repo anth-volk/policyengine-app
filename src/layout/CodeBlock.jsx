@@ -10,6 +10,7 @@ export default function CodeBlock({
   title,
   language,
   maxHeight,
+  isEditable = false,
   showExpand = true,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -155,6 +156,7 @@ export default function CodeBlock({
           extensions={[
             language in langs ? langs[language]() : langs.json(),
             EditorView.lineWrapping,
+            // Add extension here for editability
           ]}
           theme={espresso}
         />

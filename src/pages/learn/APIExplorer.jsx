@@ -1,53 +1,117 @@
-import {useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {Select} from "antd";
-import useDisplayCategory from "../../hooks/useDisplayCategory";
+import CodeBlock from "../../layout/CodeBlock";
+import { json } from "react-router-dom";
+
+const entities = {
+  "person": {
+    plural: "people"
+  },
+  "tax_unit": {
+    plural: "tax_units"
+  },
+  "spm_unit": {
+    plural: "spm_units"
+  },
+  "family": {
+    plural: "families"
+  },
+  "household": {
+    plural: "households"
+  },
+  "marital_unit": {
+    plural: "marital_units"
+  },
+}
+
+const memberArray = [
+  "head_of_household",
+  "spouse",
+  "child1",
+  "child2"
+];
+
+// Look into copying arrays
+const sampleHousehold = {
+  "people": {
+    "head_of_household": {},
+    "spouse": {},
+    "child1": {},
+    "child2": {}
+  },
+  "tax_units": {
+    "tax_unit": {
+      members: memberArray
+    }
+  },
+  "spm_units": {
+    "spm_unit": {
+      members: memberArray
+    }
+  },
+  "households": {
+    "household": {
+      members: memberArray
+    }
+  },
+  "families": {
+    "family": {
+      members: memberArray
+    }
+  },
+  "marital_units": {
+    "head_marital_unit": {
+      members: [
+        "head_of_household",
+        "spouse"
+      ]
+    }
+  }
+};
 
 const variables = [
   {
     label: "Earned Income Tax Credit",
-    value: "eitc"
+    value: "eitc",
+    entity: "tax_unit"
   },
   {
     label: "Child Tax Credit",
-    value: "ctc"
+    value: "ctc",
+    entity: "tax_unit"
   }
 ];
 
-const situations = [
-  {
-    label: "individual",
-    value: "individual"
-  },
-  {
-    label: "married couple",
-    value: "married_couple"
-  },
-  {
-    label: "couple with 2 children",
-    value: "couple_2_children"
-  },
-  {
-    label: "single mother of 2",
-    value: "single_mother_2_children"
-  }
-];
-
-const years = [
-  {
-    label: "2025",
-    value: 2025
-  },
-  {
-    label: "2026",
-    value: 2026
-  }
-];
 
 export default function APIExplorer() {
 
     const [variable, setVariable] = useState(variables[0]);
-    const [situation, setSituation] = useState(situations[0]);
-    const [year, setYear] = useState(years[0]);
+    const [formattedCode, setFormattedCode] = useState("");
+
+    const formatCode = useCallback(() =>  {
+      let outputObject = sampleHousehold;
+
+      // Create variable-year nested item
+      const variableAndYear = {
+        [variable.value]: {
+          "2025": null
+        }
+      };
+
+      // Look up correct entity in metadata; change this later
+      const entityToFill = variable.entity;
+      const entityPlural = entities[entityToFill].plural;
+
+      // Fill entity
+      outputObject[entityPlural][entityToFill] = variableAndYear;
+      
+      const jsonString = JSON.stringify(outputObject, null, 2);
+      setFormattedCode(jsonString);
+    }, [variable]);
+
+    useEffect(() => {
+      formatCode(variable);
+    }, [variable, formatCode]);
 
     return (
       <div style={{
@@ -57,14 +121,16 @@ export default function APIExplorer() {
       {/* Sentence filler */}
       <SentenceFormatter 
         variable={variable}
-        situation={situation}
-        year={year}
         setVariable={setVariable}
-        setSituation={setSituation}
-        setYear={setYear}
       />
       {/* API composition explainer */}
       {/* Code inputs and outputs */}
+      <CodeBlock
+        language="json"
+        data={formattedCode}
+        maxHeight="300px"
+        isEditable="true"
+      />
       </div>
     );
 }
@@ -73,18 +139,8 @@ export function SentenceFormatter(props) {
 
   const {
     variable,
-    situation,
-    year,
     setVariable,
-    setSituation,
-    setYear
   } = props;
-
-  const dC = useDisplayCategory();
-
-  function handleSubmit() {
-    return;
-  }
 
   return (
     <div style={{
@@ -98,15 +154,9 @@ export function SentenceFormatter(props) {
         setVariable={setVariable}
       />
       <p>for a(n)</p>
-      <SituationSelector
-        situation={situation}
-        setSituation={setSituation}
-      />
+      <p>married couple with two children</p>
       <p>in the year</p>
-      <YearSelector
-        year={year}
-        setYear={setYear}
-      />
+      <p>2025</p>
     </div>
   )
 
@@ -119,7 +169,7 @@ export function VariableSelector(props) {
   } = props;
 
   function handleSelect(value) {
-    setVariable(value);
+    setVariable(variables.filter((variable) => variable.value === value)[0]);
   }
 
   return (
@@ -127,46 +177,6 @@ export function VariableSelector(props) {
         style={{ width:  200 }}
         options={variables}
         value={variable}
-        onSelect={handleSelect}
-      />
-  )
-}
-
-export function SituationSelector(props) {
-  const {
-    situation,
-    setSituation
-  } = props;
-
-  function handleSelect(value) {
-    setSituation(value);
-  }
-
-  return (
-      <Select
-        style={{ width:  200 }}
-        options={situations}
-        value={situation}
-        onSelect={handleSelect}
-      />
-  )
-}
-
-export function YearSelector(props) {
-  const {
-    year,
-    setYear
-  } = props;
-
-  function handleSelect(value) {
-    setYear(value);
-  }
-
-  return (
-      <Select
-        style={{ width:  200 }}
-        options={years}
-        value={year}
         onSelect={handleSelect}
       />
   )
