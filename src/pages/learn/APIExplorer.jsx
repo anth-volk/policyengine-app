@@ -45,6 +45,9 @@ const years = [
 
 export default function APIExplorer() {
 
+    const [variable, setVariable] = useState(variables[0]);
+    const [situation, setSituation] = useState(situations[0]);
+    const [year, setYear] = useState(years[0]);
 
     return (
       <div style={{
@@ -52,20 +55,32 @@ export default function APIExplorer() {
         flexDirection: "column"
       }}>
       {/* Sentence filler */}
-      <SentenceFormatter />
+      <SentenceFormatter 
+        variable={variable}
+        situation={situation}
+        year={year}
+        setVariable={setVariable}
+        setSituation={setSituation}
+        setYear={setYear}
+      />
       {/* API composition explainer */}
       {/* Code inputs and outputs */}
       </div>
     );
 }
 
-export function SentenceFormatter() {
+export function SentenceFormatter(props) {
+
+  const {
+    variable,
+    situation,
+    year,
+    setVariable,
+    setSituation,
+    setYear
+  } = props;
 
   const dC = useDisplayCategory();
-
-  const selectedVariable = useState(variables[0]);
-  const selectedSituation = useState(situations[0]);
-  const selectedYear = useState(years[0]);
 
   function handleSubmit() {
     return;
@@ -78,27 +93,81 @@ export function SentenceFormatter() {
       width: "100%"
     }}>
       <p>I want to calculate the</p>
-      <Select
-        style={{ width: dC === "mobile" ? 150 : 200 }}
-        options={variables}
-        defaultValue={variables[0]}
-        onSelect={handleSubmit}
+      <VariableSelector
+        variable={variable}
+        setVariable={setVariable}
       />
       <p>for a(n)</p>
-      <Select
-        style={{ width: dC === "mobile" ? 150 : 200 }}
-        options={situations}
-        defaultValue={situations[0]}
-        onSelect={handleSubmit}
+      <SituationSelector
+        situation={situation}
+        setSituation={setSituation}
       />
       <p>in the year</p>
-      <Select
-        style={{ width: dC === "mobile" ? 150 : 200 }}
-        options={years}
-        defaultValue={years[0]}
-        onSelect={handleSubmit}
+      <YearSelector
+        year={year}
+        setYear={setYear}
       />
     </div>
   )
 
+}
+
+export function VariableSelector(props) {
+  const {
+    variable,
+    setVariable
+  } = props;
+
+  function handleSelect(value) {
+    setVariable(value);
+  }
+
+  return (
+      <Select
+        style={{ width:  200 }}
+        options={variables}
+        value={variable}
+        onSelect={handleSelect}
+      />
+  )
+}
+
+export function SituationSelector(props) {
+  const {
+    situation,
+    setSituation
+  } = props;
+
+  function handleSelect(value) {
+    setSituation(value);
+  }
+
+  return (
+      <Select
+        style={{ width:  200 }}
+        options={situations}
+        value={situation}
+        onSelect={handleSelect}
+      />
+  )
+}
+
+export function YearSelector(props) {
+  const {
+    year,
+    setYear
+  } = props;
+
+  function handleSelect(value) {
+    setYear(value);
+  }
+
+  return (
+      <Select
+        style={{ width:  200 }}
+        options={years}
+        value={year}
+        onSelect={handleSelect}
+      />
+  )
 }
