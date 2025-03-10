@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Select } from "antd";
-import CodeBlock from "../../layout/CodeBlock";
-import { json } from "react-router-dom";
+import JsonBlockKeyHighlighted from "./JsonBlockKeyHighlighted";
 
 const entities = {
   person: {
@@ -29,10 +28,20 @@ const memberArray = ["head_of_household", "spouse", "child1", "child2"];
 // Look into copying arrays
 const sampleHousehold = {
   people: {
-    head_of_household: {},
-    spouse: {},
-    child1: {},
-    child2: {},
+    head_of_household: {
+      age: { 2025: 30 },
+      employment_income: { 2025: 50000 },
+    },
+    spouse: {
+      age: { 2025: 30 },
+      employment_income: { 2025: 50000 },
+    },
+    child1: {
+      age: { 2025: 5 },
+    },
+    child2: {
+      age: { 2025: 5 },
+    },
   },
   tax_units: {
     tax_unit: {
@@ -74,12 +83,23 @@ const variables = [
   },
 ];
 
+const keysAndColors = [
+  { key: "people", color: "yellow" },
+  { key: "head_of_household", color: "orange" },
+  { key: "spouse", color: "orange" },
+  { key: "child1", color: "orange" },
+  { key: "child2", color: "orange" },
+  { key: "employment_income", color: "red" },
+  { key: "age", color: "red" },
+  { key: "2025", color: "green" },
+]
+
 export default function APIExplorer() {
   const [variable, setVariable] = useState(variables[0]);
   const [formattedCode, setFormattedCode] = useState("");
 
   const formatCode = useCallback(() => {
-    let outputObject = sampleHousehold;
+    let outputObject = JSON.parse(JSON.stringify(sampleHousehold));
 
     // Create variable-year nested item
     const variableAndYear = {
@@ -95,13 +115,21 @@ export default function APIExplorer() {
     // Fill entity
     outputObject[entityPlural][entityToFill] = variableAndYear;
 
-    const jsonString = JSON.stringify(outputObject, null, 2);
-    setFormattedCode(jsonString);
+    // const jsonString = JSON.stringify(outputObject, null, 2);
+    // setFormattedCode(jsonString);
+    setFormattedCode(outputObject);
   }, [variable]);
 
   useEffect(() => {
     formatCode(variable);
   }, [variable, formatCode]);
+
+  const clippedSample = JSON.parse(JSON.stringify(sampleHousehold));
+  delete clippedSample.tax_units;
+  delete clippedSample.spm_units;
+  delete clippedSample.families;
+  delete clippedSample.marital_units;
+  delete clippedSample.households;
 
   return (
     <div
@@ -111,9 +139,27 @@ export default function APIExplorer() {
       }}
     >
       {/* Sentence filler */}
-      <SentenceFormatter variable={variable} setVariable={setVariable} />
       {/* API composition explainer */}
-      <h4>API schema overview</h4>
+      <APISchemaExplained />
+      <JsonBlockKeyHighlighted jsonData={clippedSample} setJsonData={setFormattedCode} keysAndColors={keysAndColors}/>
+      <SentenceFormatter variable={variable} setVariable={setVariable} />
+      {/* Code inputs and outputs */}
+      {/*
+      <CodeBlock
+        language="json"
+        data={formattedCode}
+        maxHeight="300px"
+        isEditable="true"
+      />
+      */}
+    </div>
+  );
+}
+
+export function APISchemaExplained() {
+  return (
+    <>
+      <h4>API schema, explained</h4>
       <p>
         The core of the PolicyEngine household API is the{" "}
         <b>household object</b>, a custom structure we use to represent
@@ -142,24 +188,19 @@ export default function APIExplorer() {
         </li>
       </ol>
       <p>
-        In the code block below, each structural level is highlighted to show
-        how it functions.
+        The sample code snippet below represents one portion of a full household object, highlighting each tier.
       </p>
-      {/* Code inputs and outputs */}
-      <CodeBlock
-        language="json"
-        data={formattedCode}
-        maxHeight="300px"
-        isEditable="true"
-      />
-    </div>
-  );
+
+    </>
+  )
 }
 
 export function SentenceFormatter(props) {
   const { variable, setVariable } = props;
 
   return (
+    <>
+    <h4>Create an example</h4>
     <div
       style={{
         display: "flex",
@@ -174,6 +215,7 @@ export function SentenceFormatter(props) {
       <p>in the year</p>
       <p>2025</p>
     </div>
+    </>
   );
 }
 
