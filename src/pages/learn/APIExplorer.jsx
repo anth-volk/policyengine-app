@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Select } from "antd";
-import JsonBlockKeyHighlighted from "./JsonBlockKeyHighlighted";
+import APIInputBlockWithHighlight from "./APIInputBlockWithHighlight";
+import CodeBlock from "../../layout/CodeBlock";
 
 const entities = {
   person: {
@@ -83,16 +84,6 @@ const variables = [
   },
 ];
 
-const keysAndColors = [
-  { key: "people", color: "yellow" },
-  { key: "head_of_household", color: "orange" },
-  { key: "spouse", color: "orange" },
-  { key: "child1", color: "orange" },
-  { key: "child2", color: "orange" },
-  { key: "employment_income", color: "red" },
-  { key: "age", color: "red" },
-  { key: "2025", color: "green" },
-]
 
 export default function APIExplorer() {
   const [variable, setVariable] = useState(variables[0]);
@@ -141,17 +132,16 @@ export default function APIExplorer() {
       {/* Sentence filler */}
       {/* API composition explainer */}
       <APISchemaExplained />
-      <JsonBlockKeyHighlighted jsonData={clippedSample} setJsonData={setFormattedCode} keysAndColors={keysAndColors}/>
       <SentenceFormatter variable={variable} setVariable={setVariable} />
-      {/* Code inputs and outputs */}
-      {/*
-      <CodeBlock
-        language="json"
-        data={formattedCode}
-        maxHeight="300px"
-        isEditable="true"
-      />
-      */}
+      <div style={{
+        display: "grid",
+        flexDirection: "row",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "1rem",
+      }}>
+        <APIInputBlockWithHighlight jsonData={formattedCode} setJsonData={setFormattedCode} />
+        <APIResult jsonData={formattedCode} />
+      </div>
     </div>
   );
 }
@@ -169,27 +159,24 @@ export function APISchemaExplained() {
       {/*Add highlighting to each of these*/}
       <ol>
         <li>
-          The <b><span style={{backgroundColor: "yellow"}}>entity group</span></b>: this is one of 6 categories of people
+          The entity group: this is one of 6 categories of people
           groupings, defined by US tax law; all 6 must be present in the
           household object
         </li>
         <li>
-          The <b><span style={{backgroundColor: "orange"}}>entity(ies)</span></b>: each entity group has one or more of these,
+          The entity(ies): each entity group has one or more of these,
           and they can have any name; most entity groups have only one entity
         </li>
         <li>
-          The <b><span style={{backgroundColor: "red"}}>variable(s)</span></b>: each entity can have one or more variables
+          The variable(s): each entity can have one or more variables
           that serve as input to our calculations (if given a defined value) or
           that we will calculate and output (if set to null)
         </li>
         <li>
-          The <b><span style={{backgroundColor: "green"}}>year</span></b>: each variable must define this as a key, followed by
+          The year: each variable must define this as a key, followed by
           the relevant value
         </li>
       </ol>
-      <p>
-        The sample code snippet below represents one portion of a full household object, highlighting each tier.
-      </p>
 
     </>
   )
@@ -233,5 +220,24 @@ export function VariableSelector(props) {
       value={variable}
       onSelect={handleSelect}
     />
+  );
+}
+
+export function APIResult(props) {
+  const { jsonData } = props;
+
+  const jsonString = JSON.stringify(jsonData, null, 2);
+
+
+  return (
+    <div style={{display: "flex", flexDirection: "column", width: "100%"}}>
+      <p>Result</p>
+      <CodeBlock
+        language="json"
+        data={jsonString}
+        maxHeight="300px"
+        isEditable="true"
+      />
+    </div>
   );
 }
