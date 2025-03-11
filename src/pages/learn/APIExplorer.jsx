@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { Select } from "antd";
 import APIInputBlockWithHighlight from "./APIInputBlockWithHighlight";
 import CodeBlock from "../../layout/CodeBlock";
+import useCountryId from "../../hooks/useCountryId";
+import { wrappedResponseJson } from "../../data/wrappedJson";
 
 const entities = {
   person: {
@@ -233,17 +235,50 @@ export function VariableSelector(props) {
 }
 
 export function APISampleRequest(props) {
-  const { jsonData } = props;
+  const { inboundJsonData } = props;
 
-  const jsonString = JSON.stringify(jsonData, null, 2);
+  const [outputJson, setOutputJson] = useState(null);
+  const countryId = useCountryId();
 
+  useEffect(() => {
+    const HOUSEHOLD_API_URL = "https://household.api.policyengine.org";
+
+    // This has to be written as a standalone function because
+    // useEffect can't handle anonymous async/await
+    async function fetchOutput() {
+      if (!countryId) {
+        setOutputJson(null);
+        return;
+      }
+
+      try {
+        const res = await fetch(
+          HOUSEHOLD_API_URL + `/${countryId}/calculate_demo`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(inboundJsonData),
+          },
+        );
+        const resJson = await wrappedResponseJson(res);
+        setOutputJson(resJson);
+      } catch (err) {
+        console.error(err);
+        setOutputJson("Error while fetching output; please try again later");
+      }
+    }
+
+    fetchOutput();
+  }, [countryId, inboundJsonData]);
 
   return (
     <div style={{display: "flex", flexDirection: "column", width: "100%"}}>
       <p>Sample response</p>
       <CodeBlock
         language="json"
-        data={jsonString}
+        data={outputJson}
         maxHeight="300px"
         isEditable="true"
       />
