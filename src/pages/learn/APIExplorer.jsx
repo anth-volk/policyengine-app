@@ -106,7 +106,10 @@ export default function APIExplorer() {
     const entityPlural = entities[entityToFill].plural;
 
     // Fill entity
-    outputObject[entityPlural][entityToFill] = variableAndYear;
+    outputObject[entityPlural][entityToFill] = {
+      ...outputObject[entityPlural][entityToFill],
+      ...variableAndYear
+    };
 
     setFormattedCode(outputObject);
   }, [variable]);
@@ -181,19 +184,19 @@ export function SentenceFormatter(props) {
     <div
       style={{
         display: "flex",
-        flexFlow: "row wrap",
+        flexFlow: "wrap",
         alignItems: "center",
         width: "100%",
-        gap: "0.5rem",
+        columnGap: "0.5rem",
         marginBottom: "1rem",
       }}
     >
       <span>I want to calculate the</span>
       <VariableSelector variable={variable} setVariable={setVariable} />
-      <span>for a(n)</span>
-      <span>married couple with two children</span>
-      <span>in the year</span>
-      <span>2025</span>
+      <span>for a(n) married couple</span>
+      <span>with two children</span> 
+      <span>where the head of household made $50,000</span>
+      <span>in the year 2025</span>
     </div>
     </>
   );
@@ -208,7 +211,7 @@ export function VariableSelector(props) {
 
   return (
     <Select
-      style={{ width: 200 }}
+      // style={{ width: 200 }}
       options={variables}
       value={variable}
       onSelect={handleSelect}
