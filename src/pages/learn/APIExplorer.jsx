@@ -152,21 +152,21 @@ export function APISchemaExplained() {
       </p>
       <ol>
         <li>
-          The entity group: this is one of 6 categories of people
+          The <b>entity group</b>: this is one of 6 categories of people
           groupings, defined by US tax law; all 6 must be present in the
           household object
         </li>
         <li>
-          The entity(ies): each entity group has one or more of these,
+          The <b>entity(ies)</b>: each entity group has one or more of these,
           and they can have any name; most entity groups have only one entity
         </li>
         <li>
-          The variable(s): each entity can have one or more variables
+          The <b>variable(s)</b>: each entity can have one or more variables
           that serve as input to our calculations (if given a defined value) or
           that we will calculate and output (if set to null)
         </li>
         <li>
-          The year: each variable must define this as a key, followed by
+          The <b>year</b>: each variable must define this as a key, followed by
           the relevant value
         </li>
       </ol>
@@ -211,7 +211,6 @@ export function VariableSelector(props) {
 
   return (
     <Select
-      // style={{ width: 200 }}
       options={variables}
       value={variable}
       onSelect={handleSelect}
