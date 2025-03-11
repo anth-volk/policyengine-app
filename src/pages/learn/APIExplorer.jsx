@@ -3,7 +3,7 @@ import { Select } from "antd";
 import APIInputBlockWithHighlight from "./APIInputBlockWithHighlight";
 import CodeBlock from "../../layout/CodeBlock";
 import useCountryId from "../../hooks/useCountryId";
-import { wrappedResponseJson } from "../../data/wrappedJson";
+import { wrappedJsonStringify, wrappedResponseJson } from "../../data/wrappedJson";
 
 const entities = {
   person: {
@@ -142,7 +142,7 @@ export default function APIExplorer() {
         gap: "1rem",
       }}>
         <APIInputBlockWithHighlight jsonData={formattedCode} setJsonData={setFormattedCode} />
-        <APISampleRequest jsonData={formattedCode} />
+        <APISampleRequest inboundJsonData={formattedCode} />
       </div>
       {/* Code inputs and outputs */}
       {/*
@@ -240,6 +240,12 @@ export function APISampleRequest(props) {
   const [outputJson, setOutputJson] = useState(null);
   const countryId = useCountryId();
 
+  // Completely reset outputJson when inboundJsonData changes;
+  // this will trigger loading template
+  useEffect(() => {
+    setOutputJson(null);
+  }, [inboundJsonData]);
+
   useEffect(() => {
     const HOUSEHOLD_API_URL = "https://household.api.policyengine.org";
 
@@ -251,6 +257,10 @@ export function APISampleRequest(props) {
         return;
       }
 
+      const requestObject = {
+        household: inboundJsonData,
+      };
+
       try {
         const res = await fetch(
           HOUSEHOLD_API_URL + `/${countryId}/calculate_demo`,
@@ -259,11 +269,12 @@ export function APISampleRequest(props) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(inboundJsonData),
+            body: wrappedJsonStringify(requestObject),
           },
         );
         const resJson = await wrappedResponseJson(res);
-        setOutputJson(resJson);
+        const outputJson = resJson.result;
+        setOutputJson(wrappedJsonStringify(outputJson, null, 2));
       } catch (err) {
         console.error(err);
         setOutputJson("Error while fetching output; please try again later");
