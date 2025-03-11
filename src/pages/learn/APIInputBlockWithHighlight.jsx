@@ -1,4 +1,6 @@
+import {useState} from "react";
 import { JsonEditor } from 'json-edit-react';
+import {Checkbox} from "antd";
 
 const tiersAndColors = {
   "entityGroup": "yellow",
@@ -21,7 +23,7 @@ const entities = [
   "spm_unit",
   "household",
   "family",
-  "marital_unit",
+  "head_marital_unit",
   "person",
   "head_of_household",
   "spouse",
@@ -33,7 +35,8 @@ const variables = [
   "age",
   "employment_income",
   "eitc",
-  "ctc"
+  "ctc",
+  "members"
 ];
 
 const years = [
@@ -50,13 +53,19 @@ export default function APIInputBlockWithHighlight(props) {
   const {
     jsonData,
     setJsonData,
-    areTiersHighlighted = false
   } = props;
+
+  const [areTiersHighlighted, setAreTierHighlighted] = useState(false);
+
+  function handleHighlightTiers() {
+    setAreTierHighlighted(!areTiersHighlighted);
+  }
 
   // Custom theme: style function highlights the key if it matches keyToHighlight
   const customTheme = areTiersHighlighted ? {
     styles: {
-      property: ({ key }) =>
+      property: ({ key, level }) =>
+        level === 0 ? {} :
         entityGroups.includes(key) ? { backgroundColor: tiersAndColors.entityGroup } :
         entities.includes(key) ? { backgroundColor: tiersAndColors.entity } :
         variables.includes(key) ? { backgroundColor: tiersAndColors.variable } :
@@ -69,14 +78,14 @@ export default function APIInputBlockWithHighlight(props) {
       display: "flex",
       flexDirection: "column",
       width: "100%",
-      height: "100%"
+      height: "100%",
     }}
     >
       <p>Input JSON</p>
       <div style={{
-        width: "100%",
         height: "400px",
         overflowY: "scroll",
+        marginBottom: "20px"
       }}
       >
         <JsonEditor
@@ -86,6 +95,12 @@ export default function APIInputBlockWithHighlight(props) {
           rootName={"household"}
         />
       </div>
+      <Checkbox
+        onChange={handleHighlightTiers}
+        checked={areTiersHighlighted}
+      >
+        Highlight tiers
+      </Checkbox>
     </div>
   );
 }
