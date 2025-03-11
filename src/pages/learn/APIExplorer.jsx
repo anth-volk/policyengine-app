@@ -108,21 +108,12 @@ export default function APIExplorer() {
     // Fill entity
     outputObject[entityPlural][entityToFill] = variableAndYear;
 
-    // const jsonString = JSON.stringify(outputObject, null, 2);
-    // setFormattedCode(jsonString);
     setFormattedCode(outputObject);
   }, [variable]);
 
   useEffect(() => {
     formatCode(variable);
   }, [variable, formatCode]);
-
-  const clippedSample = JSON.parse(JSON.stringify(sampleHousehold));
-  delete clippedSample.tax_units;
-  delete clippedSample.spm_units;
-  delete clippedSample.families;
-  delete clippedSample.marital_units;
-  delete clippedSample.households;
 
   return (
     <div
@@ -131,8 +122,6 @@ export default function APIExplorer() {
         flexDirection: "column",
       }}
     >
-      {/* Sentence filler */}
-      {/* API composition explainer */}
       <APISchemaExplained />
       <SentenceFormatter variable={variable} setVariable={setVariable} />
       <div style={{
@@ -144,15 +133,6 @@ export default function APIExplorer() {
         <APIInputBlockWithHighlight jsonData={formattedCode} setJsonData={setFormattedCode} />
         <APISampleRequest inboundJsonData={formattedCode} />
       </div>
-      {/* Code inputs and outputs */}
-      {/*
-      <CodeBlock
-        language="json"
-        data={formattedCode}
-        maxHeight="300px"
-        isEditable="true"
-      />
-      */}
     </div>
   );
 }
@@ -167,7 +147,6 @@ export function APISchemaExplained() {
         household taxes and benefits. This is a four-tier nested structure
         composed of the below levels:
       </p>
-      {/*Add highlighting to each of these*/}
       <ol>
         <li>
           The entity group: this is one of 6 categories of people
@@ -202,16 +181,19 @@ export function SentenceFormatter(props) {
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
+        flexFlow: "row wrap",
+        alignItems: "center",
         width: "100%",
+        gap: "0.5rem",
+        marginBottom: "1rem",
       }}
     >
-      <p>I want to calculate the</p>
+      <span>I want to calculate the</span>
       <VariableSelector variable={variable} setVariable={setVariable} />
-      <p>for a(n)</p>
-      <p>married couple with two children</p>
-      <p>in the year</p>
-      <p>2025</p>
+      <span>for a(n)</span>
+      <span>married couple with two children</span>
+      <span>in the year</span>
+      <span>2025</span>
     </div>
     </>
   );
