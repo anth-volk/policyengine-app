@@ -140,8 +140,17 @@ export default function APIExplorer() {
         gap: "1rem",
       }}>
         <APIInputBlockWithHighlight jsonData={formattedCode} setJsonData={setFormattedCode} />
-        <APIResult jsonData={formattedCode} />
+        <APISampleRequest jsonData={formattedCode} />
       </div>
+      {/* Code inputs and outputs */}
+      {/*
+      <CodeBlock
+        language="json"
+        data={formattedCode}
+        maxHeight="300px"
+        isEditable="true"
+      />
+      */}
     </div>
   );
 }
@@ -223,7 +232,7 @@ export function VariableSelector(props) {
   );
 }
 
-export function APIResult(props) {
+export function APISampleRequest(props) {
   const { jsonData } = props;
 
   const jsonString = JSON.stringify(jsonData, null, 2);
@@ -231,7 +240,7 @@ export function APIResult(props) {
 
   return (
     <div style={{display: "flex", flexDirection: "column", width: "100%"}}>
-      <p>Result</p>
+      <p>Sample request</p>
       <CodeBlock
         language="json"
         data={jsonString}

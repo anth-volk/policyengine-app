@@ -73,12 +73,19 @@ export default function APIInputBlockWithHighlight(props) {
     }}
     >
       <p>Input JSON</p>
-      <JsonEditor
-        data={jsonData}
-        setData={setJsonData}
-        theme={customTheme}
-        rootName={"household"}
-      />
+      <div style={{
+        width: "100%",
+        height: "400px",
+        overflowY: "scroll",
+      }}
+      >
+        <JsonEditor
+          data={jsonData}
+          setData={setJsonData}
+          theme={customTheme}
+          rootName={"household"}
+        />
+      </div>
     </div>
   );
 }
