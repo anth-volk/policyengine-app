@@ -1,12 +1,25 @@
 import {useState} from "react";
 import { JsonEditor } from 'json-edit-react';
 import {Checkbox} from "antd";
+import style from "../../style";
 
 const tiersAndColors = {
-  "entityGroup": "yellow",
-  "entity": "orange",
-  "variable": "red",
-  "year": "green",
+  "entityGroup": {
+    backgroundColor: style.colors.BLUE_PRESSED,
+    color: style.colors.WHITE
+  },
+  "entity": {
+    backgroundColor: style.colors.BLUE,
+    color: style.colors.WHITE
+  },
+  "variable": {
+    backgroundColor: style.colors.BLUE_LIGHT,
+    color: style.colors.BLACK
+  },
+  "year": {
+    backgroundColor: style.colors.LIGHT_GRAY,
+    color: style.colors.BLACK
+  },
 };
 
 const entityGroups = [
@@ -66,10 +79,22 @@ export default function APIInputBlockWithHighlight(props) {
     styles: {
       property: ({ key, level }) =>
         level === 0 ? {} :
-        entityGroups.includes(key) ? { backgroundColor: tiersAndColors.entityGroup } :
-        entities.includes(key) ? { backgroundColor: tiersAndColors.entity } :
-        variables.includes(key) ? { backgroundColor: tiersAndColors.variable } :
-        years.includes(key) ? { backgroundColor: tiersAndColors.year } : {},
+        entityGroups.includes(key) ? { 
+          backgroundColor: tiersAndColors.entityGroup.backgroundColor,
+          color: tiersAndColors.entityGroup.color
+        } :
+        entities.includes(key) ? { 
+          backgroundColor: tiersAndColors.entity.backgroundColor,
+          color: tiersAndColors.entity.color
+        } :
+        variables.includes(key) ? { 
+          backgroundColor: tiersAndColors.variable.backgroundColor,
+          color: tiersAndColors.variable.color
+        } :
+        years.includes(key) ? { 
+          backgroundColor: tiersAndColors.year.backgroundColor,
+          color: tiersAndColors.year.color
+        } : {},
     }
   } : {};
 
@@ -101,6 +126,51 @@ export default function APIInputBlockWithHighlight(props) {
       >
         Highlight tiers
       </Checkbox>
+      
+      {/* Color key */}
+      {areTiersHighlighted && (
+        <div style={{ marginTop: "10px", fontSize: "14px" }}>
+          <p style={{  marginBottom: "5px" }}>Color key:</p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ 
+                width: "20px", 
+                height: "20px", 
+                backgroundColor: tiersAndColors.entityGroup.backgroundColor,
+                marginRight: "5px" 
+              }}></div>
+              <span>Entity groups</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ 
+                width: "20px", 
+                height: "20px", 
+                backgroundColor: tiersAndColors.entity.backgroundColor,
+                marginRight: "5px" 
+              }}></div>
+              <span>Entities</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ 
+                width: "20px", 
+                height: "20px", 
+                backgroundColor: tiersAndColors.variable.backgroundColor,
+                marginRight: "5px" 
+              }}></div>
+              <span>Variables</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ 
+                width: "20px", 
+                height: "20px", 
+                backgroundColor: tiersAndColors.year.backgroundColor,
+                marginRight: "5px" 
+              }}></div>
+              <span>Years</span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
