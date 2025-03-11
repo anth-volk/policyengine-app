@@ -240,7 +240,7 @@ export function APISampleRequest(props) {
 
   return (
     <div style={{display: "flex", flexDirection: "column", width: "100%"}}>
-      <p>Sample request</p>
+      <p>Sample response</p>
       <CodeBlock
         language="json"
         data={jsonString}
